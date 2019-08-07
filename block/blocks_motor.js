@@ -21,7 +21,6 @@ Blockly.Blocks['NKP_motor'] = {
     this.setNextStatement(true, null);
     this.setColour(180);
     this.setTooltip("");
-    this.setHelpUrl("https://github.com/maxpromer/iKB-1_Arduino");
   }
 };
 
