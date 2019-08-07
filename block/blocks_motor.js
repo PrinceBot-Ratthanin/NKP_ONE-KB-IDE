@@ -36,7 +36,7 @@ Blockly.Blocks['NKP_servo'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(180);
+    this.setColour(230);
     this.setTooltip("");
     this.setHelpUrl("https://github.com/maxpromer/iKB-1_Arduino");
   }
@@ -57,7 +57,7 @@ Blockly.Blocks['NKP_servo2'] = {
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
-    this.setColour(180);
+    this.setColour(230);
     this.setTooltip("");
     this.setHelpUrl("https://github.com/maxpromer/iKB-1_Arduino");
   }
