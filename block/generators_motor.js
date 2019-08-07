@@ -74,7 +74,7 @@ Blockly.JavaScript['NKP_motor_spin_right'] = function(block) {
 };
 
 Blockly.JavaScript['NKP_motor_stop'] = function(block) {  
-  var code = 'ao();';
+  var code = 'ao();\n';
   return code;
 };
 
