@@ -7,7 +7,7 @@ Blockly.JavaScript['button_1_status'] = function(block) {
 };
 
 Blockly.JavaScript['Knob_status'] = function(block) {  
-  var code = '(Knob())';
+  var code = '(_Knob())';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 Blockly.JavaScript['TCSensor_status'] = function(block) {
@@ -16,7 +16,20 @@ Blockly.JavaScript['TCSensor_status'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 Blockly.JavaScript['NKP_beep'] = function(block) {  
-  var code = 'beep();';
+  var code = 'beep();\n';
+  return code;
+};
+Blockly.JavaScript['NKP_beep_on'] = function(block) {  
+  var code = 'beep_on();\n';
+  return code;
+};
+Blockly.JavaScript['NKP_beep_off'] = function(block) {  
+  var code = 'beep_off();\n';
+  return code;
+};
+Blockly.JavaScript['NKP_beep_delay'] = function(block) { 
+  var value__delay = Blockly.JavaScript.valueToCode(block, '_delay', Blockly.JavaScript.ORDER_ATOMIC); 
+  var code = 'beep(_delay);\n';
   return code;
 };
 Blockly.JavaScript['Set_pin_Tcsensor'] = function(block) {

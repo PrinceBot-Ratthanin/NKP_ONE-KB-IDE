@@ -214,6 +214,18 @@ module.exports = {
                 'NKP_beep',
                 {
                     xml : 
+                    `<block type="NKP_beep_delay">
+                        <value name="_delay">
+                            <shadow type="math_number">
+                                <field name="NUM">500</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                'NKP_beep_on',
+                'NKP_beep_off',
+                {
+                    xml : 
                     `<block type="Set_pin_Tcsensor">
                         <value name="x0">
                             <shadow type="math_number">
@@ -399,7 +411,7 @@ module.exports = {
             icon: "/static/icons/icons8_workflow_128px.png",
             blocks : [
 
-                'NKP_motor_stop',
+                
                 { 
                     xml : 
                     `<block type="NKP_servo">
@@ -415,6 +427,7 @@ module.exports = {
                         </value>
                     </block>`
                 },
+
                 { 
                     xml : 
                     `<block type="NKP_servo2">
@@ -435,19 +448,10 @@ module.exports = {
                         </value>
                     </block>`
                 },
-                { 
+                'NKP_motor_stop',
+                {
                     xml : 
-                    `<block type="NKP_motor">
-                        <value name="ch">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="dir">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
+                    `<block type="NKP_motor_stop_ch">
                         <value name="speed">
                             <shadow type="math_number">
                                 <field name="NUM">50</field>
@@ -468,6 +472,66 @@ module.exports = {
                 {
                     xml : 
                     `<block type="NKP_motor_backward">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="NKP_motor_spin_left">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="NKP_motor_spin_right">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="NKP_motor_turn_left">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="NKP_motor_turn_right">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                { 
+                    xml : 
+                    `<block type="NKP_motor">
+                        <value name="ch">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="dir">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
                         <value name="speed">
                             <shadow type="math_number">
                                 <field name="NUM">50</field>
@@ -505,46 +569,8 @@ module.exports = {
                         </value>
                     </block>`
                 },
-                {
-                    xml : 
-                    `<block type="NKP_motor_turn_left">
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                {
-                    xml : 
-                    `<block type="NKP_motor_turn_right">
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                {
-                    xml : 
-                    `<block type="NKP_motor_spin_left">
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                {
-                    xml : 
-                    `<block type="NKP_motor_spin_right">
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
+                
+                
 
                 ]
         },

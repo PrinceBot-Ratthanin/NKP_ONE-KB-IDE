@@ -37,7 +37,6 @@ Blockly.Blocks['NKP_servo'] = {
     this.setNextStatement(true, null);
     this.setColour(230);
     this.setTooltip("");
-    this.setHelpUrl("https://github.com/maxpromer/iKB-1_Arduino");
   }
 };
 
@@ -58,16 +57,159 @@ Blockly.Blocks['NKP_servo2'] = {
     this.setNextStatement(true, null);
     this.setColour(230);
     this.setTooltip("");
-    this.setHelpUrl("https://github.com/maxpromer/iKB-1_Arduino");
   }
 };
 Blockly.Blocks['NKP_motor_forward'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Move Forward at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_backward'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Move Backward at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_forward2'] = {
+  init: function() {
+    this.appendValueInput("speed1")
+      .setCheck("Number")
+      .appendField("Move Forward left wheel at speed");
+    this.appendDummyInput()
+      .appendField("%");
+      this.appendValueInput("speed2")
+      .setCheck("Number")
+      .appendField("and right wheel at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_backward2'] = {
+  init: function() {
+    this.appendValueInput("speed1")
+      .setCheck("Number")
+      .appendField("Move Backward left wheel at speed");
+    this.appendDummyInput()
+      .appendField("%");
+      this.appendValueInput("speed2")
+      .setCheck("Number")
+      .appendField("and right wheel at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_turn_left'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Turn Left at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_turn_right'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Turn Right at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_spin_left'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Spin Left at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_spin_right'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Spin Right at speed");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_stop'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Stop Moving");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_motor_stop_ch'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Stop Moving Ch")
+      .appendField(new Blockly.FieldDropdown([["1","1"], ["2","2"]]), "ch")
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+/*Blockly.Blocks['NKP_motor_forward'] = {
   init: function() {
     this.jsonInit({
       "message0": "%1 Move Forward at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -82,18 +224,16 @@ Blockly.Blocks['NKP_motor_forward'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
 
-Blockly.Blocks['NKP_motor_backward'] = {
+/*Blockly.Blocks['NKP_motor_backward'] = {
   init: function() {
     this.jsonInit({
       "message0": "%1 Move Backward at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 20,
         "height": 16,
         "alt": "*",
@@ -108,7 +248,6 @@ Blockly.Blocks['NKP_motor_backward'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -119,7 +258,6 @@ Blockly.Blocks['NKP_motor_forward2'] = {
       "message0": "%1 Move Forward left wheel at speed %2 %% and right wheel at speed %3 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -138,7 +276,6 @@ Blockly.Blocks['NKP_motor_forward2'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -149,7 +286,6 @@ Blockly.Blocks['NKP_motor_backward2'] = {
       "message0": "%1 Move Backward left wheel at speed %2 %% and right wheel at speed %3 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -168,7 +304,6 @@ Blockly.Blocks['NKP_motor_backward2'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -179,7 +314,6 @@ Blockly.Blocks['NKP_motor_turn_left'] = {
       "message0": "%1 Turn Left at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -194,7 +328,6 @@ Blockly.Blocks['NKP_motor_turn_left'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -205,7 +338,6 @@ Blockly.Blocks['NKP_motor_turn_right'] = {
       "message0": "%1 Turn Right at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -220,7 +352,6 @@ Blockly.Blocks['NKP_motor_turn_right'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -231,7 +362,6 @@ Blockly.Blocks['NKP_motor_spin_left'] = {
       "message0": "%1 Spin Left at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -246,7 +376,6 @@ Blockly.Blocks['NKP_motor_spin_left'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -257,7 +386,6 @@ Blockly.Blocks['NKP_motor_spin_right'] = {
       "message0": "%1 Spin Right at speed %2 %%",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -272,7 +400,6 @@ Blockly.Blocks['NKP_motor_spin_right'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
 };
@@ -282,7 +409,6 @@ Blockly.Blocks['NKP_motor_stop'] = {
       "message0": "%1 Stop Moving",
       "args0": [{
         "type": "field_image",
-        "src": require('path').dirname(Vue.prototype.$global.plugin.pluginInfo.plugins["block_iKB-1.js"].dir) + "/static/wheel-icon.png",
         "width": 18,
         "height": 16,
         "alt": "*",
@@ -293,10 +419,9 @@ Blockly.Blocks['NKP_motor_stop'] = {
       "nextStatement": null,
       "colour": 180,
       "tooltip": "",
-      "helpUrl": "https://github.com/maxpromer/iKB-1_Arduino"
     });
   }
-};
+};*/
 
 
 }

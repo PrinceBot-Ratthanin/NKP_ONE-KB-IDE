@@ -78,6 +78,12 @@ Blockly.JavaScript['NKP_motor_stop'] = function(block) {
   return code;
 };
 
+Blockly.JavaScript['NKP_motor_stop_ch'] = function(block) {
+  var dropdown_ch = block.getFieldValue('ch');
+  var code = 'motor(dropdown_ch,1,0);\n';
+  return code;
+};
+
 Blockly.JavaScript['NKP_motor_forward2'] = function(block) {
   var value_speed1 = Blockly.JavaScript.valueToCode(block, 'speed1', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var value_speed2 = Blockly.JavaScript.valueToCode(block, 'speed2', Blockly.JavaScript.ORDER_ATOMIC) || '0';

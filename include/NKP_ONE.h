@@ -50,7 +50,7 @@ void NKP_ONE(){
 }
 
 #define _knob 36
-int Knob(){
+int _Knob(){
   return analogRead(_knob);
 }
 void beep(){
@@ -65,6 +65,16 @@ void beep(int _delay){
   pinMode(_buzzer,OUTPUT);
   digitalWrite(_buzzer,HIGH);
   delay(_delay);
+  digitalWrite(_buzzer,LOW);
+}
+void beep_on(){
+  int _buzzer = 12;
+  pinMode(_buzzer,OUTPUT);
+  digitalWrite(_buzzer,HIGH);
+}
+void beep_off(){
+  int _buzzer = 12;
+  pinMode(_buzzer,OUTPUT);
   digitalWrite(_buzzer,LOW);
 }
 /*void IO15(){

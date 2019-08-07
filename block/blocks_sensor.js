@@ -7,7 +7,7 @@ Blockly.Blocks['button_1_status'] = {
         .appendField(new Blockly.FieldImage("/static/icons/sw12x12.png", 20, 20, "*"))
         .appendField("SW1 is pressed");
     this.setInputsInline(true);
-    this.setOutput(true, "Boolean");
+    this.setOutput(true, "Number");
     this.setColour(90);
  this.setTooltip("get SW1 pressed or not");
  this.setHelpUrl("");
@@ -55,6 +55,40 @@ Blockly.Blocks['NKP_beep'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Buzzer beep");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(90);
+ this.setTooltip("Buzzer beep");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['NKP_beep_delay'] = {
+  init: function() {
+   this.appendValueInput("_delay")
+        .setCheck("Number")
+        .appendField("Buzzer On ");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(90);
+ this.setTooltip("Buzzer beep");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['NKP_beep_on'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Buzzer on");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(90);
+ this.setTooltip("Buzzer beep");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['NKP_beep_off'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Buzzer off");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(90);
