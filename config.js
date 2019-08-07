@@ -7,6 +7,6 @@ module.exports = {
     website : 'http://www.princebot.net/',
     email : 'print081@gmail.com',
     git : 'https://github.com/PrinceBot-Ratthanin/NKP_ONE-KB-IDE/',    
-    image : '/static/NKP_ONE.PNG',
-    version : '1.0.2'
+    image : '/static/NKP_ONE.jpg',
+    version : '1.0.3'
 };
