@@ -1,0 +1,1 @@
+# NKP_ONE-KB-IDE
