@@ -427,27 +427,6 @@ module.exports = {
                         </value>
                     </block>`
                 },
-
-                { 
-                    xml : 
-                    `<block type="NKP_servo2">
-                        <value name="ch">
-                            <shadow type="math_number">
-                                <field name="NUM">1</field>
-                            </shadow>
-                        </value>
-                        <value name="dir">
-                            <shadow type="math_number">
-                                <field name="NUM">1</field>
-                            </shadow>
-                        </value>
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
                 'NKP_motor_stop',
                 {
                     xml : 

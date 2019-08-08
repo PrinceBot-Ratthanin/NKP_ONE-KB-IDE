@@ -80,7 +80,7 @@ Blockly.JavaScript['NKP_motor_stop'] = function(block) {
 
 Blockly.JavaScript['NKP_motor_stop_ch'] = function(block) {
   var dropdown_ch = block.getFieldValue('ch');
-  var code = 'motor(dropdown_ch,1,0);\n';
+  var code = 'motor(' + dropdown_ch + ', 1, 0);\n';
   return code;
 };
 

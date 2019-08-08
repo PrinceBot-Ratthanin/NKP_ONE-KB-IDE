@@ -64,14 +64,16 @@ Blockly.Blocks['NKP_beep'] = {
 };
 Blockly.Blocks['NKP_beep_delay'] = {
   init: function() {
-   this.appendValueInput("_delay")
-        .setCheck("Number")
-        .appendField("Buzzer On ");
+    this.appendValueInput("_delay")
+      .setCheck("Number")
+      .appendField("Buzzer Ond");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(90);
- this.setTooltip("Buzzer beep");
- this.setHelpUrl("");
+    this.setTooltip("");
   }
 };
 Blockly.Blocks['NKP_beep_on'] = {

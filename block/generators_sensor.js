@@ -27,9 +27,9 @@ Blockly.JavaScript['NKP_beep_off'] = function(block) {
   var code = 'beep_off();\n';
   return code;
 };
-Blockly.JavaScript['NKP_beep_delay'] = function(block) { 
-  var value__delay = Blockly.JavaScript.valueToCode(block, '_delay', Blockly.JavaScript.ORDER_ATOMIC); 
-  var code = 'beep(_delay);\n';
+Blockly.JavaScript['NKP_beep_delay'] = function(block) {
+  var value_delay = Blockly.JavaScript.valueToCode(block, '_delay', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = 'beep(' + value_delay + ');\n';
   return code;
 };
 Blockly.JavaScript['Set_pin_Tcsensor'] = function(block) {
