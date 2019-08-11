@@ -1,5 +1,5 @@
 
-void motor_S(int pin, int Speeds) {
+void motor(int pin, int Speeds) {
   int _SpeedsA;
   int _SpeedsB;
   if (pin == 1) {
