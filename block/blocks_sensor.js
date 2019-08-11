@@ -25,6 +25,28 @@ Blockly.Blocks['Knob_status'] = {
  this.setHelpUrl("");
   }
 };
+Blockly.Blocks['sw1_press'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Sw1_press");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['Read_position_TCSensor'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("read Position of line");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(90);
+ this.setTooltip("read Position of line");
+ this.setHelpUrl("");
+  }
+};
 /*Blockly.Blocks['TCSensor_status'] = {
   init: function() {
     this.appendDummyInput()
@@ -50,7 +72,30 @@ Blockly.Blocks['TCSensor_status'] = {
  this.setHelpUrl("");
   }
 };
-
+Blockly.Blocks['TCSensor_pin'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("TCSensor pin Ch1")
+      .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "ch1");
+    this.appendDummyInput()
+      .appendField(" Ch2")
+      .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "ch2");
+    this.appendDummyInput()
+      .appendField(" Ch3")
+      .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "ch3");
+    this.appendDummyInput()
+      .appendField(" Ch4")
+      .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "ch4");
+    this.appendDummyInput()
+      .appendField(" Ch5")
+      .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "ch5");   
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
 Blockly.Blocks['NKP_beep'] = {
   init: function() {
     this.appendDummyInput()
@@ -120,6 +165,56 @@ Blockly.Blocks['Set_pin_Tcsensor'] = {
     this.setNextStatement(true, null);
     this.setColour(230);
  this.setTooltip("Set_pin_Tcsensor");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['Set_min_Tcsensor'] = {
+  init: function() {
+    this.appendValueInput("x0")
+        .setCheck("Number")
+        .appendField(" Set min value Pin A");
+    this.appendValueInput("x1")
+        .setCheck("Number")
+        .appendField("Pin B");
+    this.appendValueInput("x2")
+        .setCheck("Number")
+        .appendField("Pin C");
+    this.appendValueInput("x3")
+        .setCheck("Number")
+        .appendField("Pin D");
+    this.appendValueInput("x4")
+        .setCheck("Number")
+        .appendField("Pin E");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("Set_min_Tcsensor");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['Set_max_Tcsensor'] = {
+  init: function() {
+    this.appendValueInput("x0")
+        .setCheck("Number")
+        .appendField(" Set max value Pin A");
+    this.appendValueInput("x1")
+        .setCheck("Number")
+        .appendField("Pin B");
+    this.appendValueInput("x2")
+        .setCheck("Number")
+        .appendField("Pin C");
+    this.appendValueInput("x3")
+        .setCheck("Number")
+        .appendField("Pin D");
+    this.appendValueInput("x4")
+        .setCheck("Number")
+        .appendField("Pin E");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("Set_max_Tcsensor");
  this.setHelpUrl("");
   }
 };

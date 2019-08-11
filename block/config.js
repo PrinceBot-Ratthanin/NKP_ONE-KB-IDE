@@ -208,9 +208,11 @@ module.exports = {
             color : '230',
             icon : '/static/icons/icons8_thermometer_96px.png',
             blocks : [
+                'sw1_press',
                 'button_1_status',
                 'Knob_status',
                 'TCSensor_status',
+                'Read_position_TCSensor',
                 'NKP_beep',
                 {
                     xml : 
@@ -250,6 +252,96 @@ module.exports = {
                         <value name="x4">
                             <shadow type="math_number">
                                 <field name="NUM">25</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="TCSensor_pin">
+                        <value name="ch1">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="ch2">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="ch3">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="ch4">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="ch5">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="Set_min_Tcsensor">
+                        <value name="x0">
+                            <shadow type="math_number">
+                                <field name="NUM">300</field>
+                            </shadow>
+                        </value>
+                        <value name="x1">
+                            <shadow type="math_number">
+                                <field name="NUM">300</field>
+                            </shadow>
+                        </value>
+                        <value name="x2">
+                            <shadow type="math_number">
+                                <field name="NUM">300</field>
+                            </shadow>
+                        </value>
+                        <value name="x3">
+                            <shadow type="math_number">
+                                <field name="NUM">300</field>
+                            </shadow>
+                        </value>
+                        <value name="x4">
+                            <shadow type="math_number">
+                                <field name="NUM">300</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="Set_max_Tcsensor">
+                        <value name="x0">
+                            <shadow type="math_number">
+                                <field name="NUM">3500</field>
+                            </shadow>
+                        </value>
+                        <value name="x1">
+                            <shadow type="math_number">
+                                <field name="NUM">3500</field>
+                            </shadow>
+                        </value>
+                        <value name="x2">
+                            <shadow type="math_number">
+                                <field name="NUM">3500</field>
+                            </shadow>
+                        </value>
+                        <value name="x3">
+                            <shadow type="math_number">
+                                <field name="NUM">3500</field>
+                            </shadow>
+                        </value>
+                        <value name="x4">
+                            <shadow type="math_number">
+                                <field name="NUM">3500</field>
                             </shadow>
                         </value>
                     </block>`
@@ -542,6 +634,16 @@ module.exports = {
                             </shadow>
                         </value>
                         <value name="speed2">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="Run_following_of_line">
+                        <value name="_speed">
                             <shadow type="math_number">
                                 <field name="NUM">50</field>
                             </shadow>

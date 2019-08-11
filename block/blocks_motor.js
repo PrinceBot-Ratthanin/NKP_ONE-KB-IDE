@@ -204,6 +204,21 @@ Blockly.Blocks['NKP_motor_stop_ch'] = {
     this.setTooltip("");
   }
 };
+
+Blockly.Blocks['Run_following_of_line'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("speed for line following");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
 /*Blockly.Blocks['NKP_motor_forward'] = {
   init: function() {
     this.jsonInit({

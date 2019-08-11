@@ -10,6 +10,10 @@ Blockly.JavaScript['Knob_status'] = function(block) {
   var code = '(_Knob())';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+Blockly.JavaScript['Read_position_TCSensor'] = function(block) {  
+  var code = '(readline())';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
 Blockly.JavaScript['TCSensor_status'] = function(block) {
   var dropdown_pin = block.getFieldValue('pin');
   var code = `(analog(${dropdown_pin}))`;
@@ -39,7 +43,41 @@ Blockly.JavaScript['Set_pin_Tcsensor'] = function(block) {
   var value_x3 = Blockly.JavaScript.valueToCode(block, 'x3', Blockly.JavaScript.ORDER_ATOMIC);
   var value_x4 = Blockly.JavaScript.valueToCode(block, 'x4', Blockly.JavaScript.ORDER_ATOMIC);
   var value_x5 = Blockly.JavaScript.valueToCode(block, 'x5', Blockly.JavaScript.ORDER_ATOMIC);   
-  var code = `setSensorPins((const uint8_t[]){${value_x0}, ${value_x1}, ${value_x2} , ${value_x3},${value_x4}}, 5);\n`;
+  var code = `setSensorPins((const int[]){${value_x0}, ${value_x1}, ${value_x2} , ${value_x3},${value_x4}}, 5);\n`;
+  return code;
+};
+
+Blockly.JavaScript['TCSensor_pin'] = function(block) {
+  var dropdown_ch1 = block.getFieldValue('ch1');
+  var dropdown_ch2 = block.getFieldValue('ch2');
+  var dropdown_ch3 = block.getFieldValue('ch3');
+  var dropdown_ch4 = block.getFieldValue('ch4');
+  var dropdown_ch5 = block.getFieldValue('ch5');
+  var code = `setSensorPins((const int[]){${dropdown_ch1}, ${dropdown_ch2}, ${dropdown_ch3} , ${dropdown_ch4},${dropdown_ch5}}, 5);\n`;
+  return code;
+};
+Blockly.JavaScript['Set_min_Tcsensor'] = function(block) {
+  var value_x0 = Blockly.JavaScript.valueToCode(block, 'x0', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x1 = Blockly.JavaScript.valueToCode(block, 'x1', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x2 = Blockly.JavaScript.valueToCode(block, 'x2', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x3 = Blockly.JavaScript.valueToCode(block, 'x3', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x4 = Blockly.JavaScript.valueToCode(block, 'x4', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x5 = Blockly.JavaScript.valueToCode(block, 'x5', Blockly.JavaScript.ORDER_ATOMIC);   
+  var code = `setSensorMin((const uint16_t[]){${value_x0}, ${value_x1}, ${value_x2} , ${value_x3},${value_x4}});\n`;
+  return code;
+};
+Blockly.JavaScript['Set_max_Tcsensor'] = function(block) {
+  var value_x0 = Blockly.JavaScript.valueToCode(block, 'x0', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x1 = Blockly.JavaScript.valueToCode(block, 'x1', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x2 = Blockly.JavaScript.valueToCode(block, 'x2', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x3 = Blockly.JavaScript.valueToCode(block, 'x3', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x4 = Blockly.JavaScript.valueToCode(block, 'x4', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x5 = Blockly.JavaScript.valueToCode(block, 'x5', Blockly.JavaScript.ORDER_ATOMIC);   
+  var code = `setSensorMax((const uint16_t[]){${value_x0}, ${value_x1}, ${value_x2} , ${value_x3},${value_x4}});\n`;
+  return code;
+};
+Blockly.JavaScript['sw1_press'] = function(block) {  
+  var code = 'wait();\n';
   return code;
 };
 /*Blockly.JavaScript['bme280_read_temp'] = function(block) {

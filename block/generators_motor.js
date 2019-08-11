@@ -101,4 +101,11 @@ Blockly.JavaScript['NKP_motor_backward2'] = function(block) {
   code += 'motor(2, 2, ' + value_speed2 + ');\n';
   return code;
 };
+
+Blockly.JavaScript['Run_following_of_line'] = function(block) {
+  var value_speed = Blockly.JavaScript.valueToCode(block, 'speed', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = '';
+  code += 'Run_following_of_line( ' + value_speed + ');\n';
+  return code;
+};
 }
