@@ -19,9 +19,13 @@
 #include "NKP_Servo_lib.h"
 #include "NKP_IO.h"
 #include "NKP_TCSensor.h"
+#include "Adafruit_TCS34725.h"
+
 
 
 SSD1306Wire display(0x3c, 21, 22);
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
+
 
 
 #define M1A 2
@@ -30,6 +34,8 @@ SSD1306Wire display(0x3c, 21, 22);
 #define M2B 17
 
 void NKP_ONE(){
+
+
 
   Serial.begin(115200);
   pinMode(15,INPUT_PULLUP);
@@ -48,6 +54,9 @@ void NKP_ONE(){
   ledcAttachPin(4, 7);
   ledcAttachPin(16, 4);
   ledcAttachPin(17, 5);
+  if (tcs.begin()) {
+     Serial.println("Found sensor");
+  } 
 }
 
 #define _knob 36
@@ -78,19 +87,14 @@ void beep_off(){
   pinMode(_buzzer,OUTPUT);
   digitalWrite(_buzzer,LOW);
 }
-void Run_following_of_line(int _speed){
-
-  float Kp = 4 ;
-  float Ki = 0;
-  float Kd = 50;
-  uint16_t setpoint;
-  float present_position;
-  float errors = 0;
-  float output = 0;
-  float integral ;
-  float derivative ;
-  float previous_error ;
-
+void Run_following_of_line(int _speed,float Kp,float Ki,float Kd){
+int16_t setpoint;
+float present_position;
+float errors = 0;
+float output = 0;
+float integral ;
+float derivative ;
+float previous_error;
     int speed_max = _speed;
     present_position = readline() / ((5 - 1) * 10) ;
     setpoint = 50.0;
@@ -98,7 +102,7 @@ void Run_following_of_line(int _speed){
     integral = integral + errors ;
     derivative = (errors - previous_error) ;
     output = Kp * errors + Ki * integral + Kd * derivative;
-    int max_output = 100;
+    int max_output = 70;
     previous_error = errors;
     if (output > max_output )output = max_output;
     else if (output < -max_output)output = -max_output;
@@ -107,17 +111,16 @@ void Run_following_of_line(int _speed){
     if(speed_left > 0){
       motor(1,1,speed_left);
     }
-    else{
+    else if(speed_left <=0){
       motor(1,2,speed_left);
     }
     if(speed_right > 0){
       motor(2,1,speed_right);
     }
-    else
-    {
-      motor(2,2,speed_right);
+    else if(speed_right <=0){
+      motor(2,2,speed_left);
     }
-    delay(1);
+    delay(10);
 }
 void wait(){
   pinMode(15,INPUT_PULLUP);
@@ -146,6 +149,25 @@ void wait(){
   display.clear();
   display.display();
 }
+float Read_Color_TCS(int color_of_sensor){
+  uint16_t clearcol_lib, red_lib, green_lib, blue_lib;
+ float average_lib, r_lib, g_lib, b_lib;
+ //delay(100); // Farbmessung dauert c. 50ms 
+ tcs.getRawData(&red_lib, &green_lib, &blue_lib, &clearcol_lib);
+ average_lib = (red_lib+green_lib+blue_lib)/3;
+ r_lib = red_lib/average_lib;
+ g_lib = green_lib/average_lib;
+ b_lib = blue_lib/average_lib;
+ if(color_of_sensor == 0){
+  return r_lib*100;
+ }
+ else if(color_of_sensor == 1){
+  return g_lib*100;
+ }
+  else if(color_of_sensor == 2){
+  return b_lib*100;
+ }
+ }
 /*void IO15(){
   while(sw1() == 1){
     set_oled(0,0,"press sw1 ");
