@@ -72,6 +72,18 @@ Blockly.Blocks['TCSensor_status'] = {
  this.setHelpUrl("");
   }
 };
+Blockly.Blocks['TCS_color_status'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("TCS_color pin")
+        .appendField(new Blockly.FieldDropdown([["R","0"],["G","1"], ["B","2"]]), "_color");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(90);
+ this.setTooltip("color");
+ this.setHelpUrl("");
+  }
+};
 Blockly.Blocks['TCSensor_pin'] = {
   init: function() {
     this.appendDummyInput()

@@ -224,6 +224,16 @@ module.exports = {
                         </value>
                     </block>`
                 },
+                {
+                    xml : 
+                    `<block type="TCS_color_status">
+                        <value name="_color">
+                            <shadow type="math_number">
+                                <field name="NUM">500</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
                 'NKP_beep_on',
                 'NKP_beep_off',
                 {
@@ -286,6 +296,7 @@ module.exports = {
                         </value>
                     </block>`
                 },
+                
                 {
                     xml : 
                     `<block type="Set_min_Tcsensor">
@@ -646,6 +657,21 @@ module.exports = {
                         <value name="_speed">
                             <shadow type="math_number">
                                 <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="_kp">
+                            <shadow type="math_number">
+                                <field name="NUM">1</field>
+                            </shadow>
+                        </value>
+                        <value name="_ki">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="_kd">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
                             </shadow>
                         </value>
                     </block>`

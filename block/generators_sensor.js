@@ -19,6 +19,11 @@ Blockly.JavaScript['TCSensor_status'] = function(block) {
   var code = `(analog(${dropdown_pin}))`;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+Blockly.JavaScript['TCS_color_status'] = function(block) {
+  var dropdown_pin = block.getFieldValue('_color');
+  var code = `(Read_Color_TCS(${dropdown_pin}))`;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
 Blockly.JavaScript['NKP_beep'] = function(block) {  
   var code = 'beep();\n';
   return code;
