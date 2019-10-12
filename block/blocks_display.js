@@ -124,7 +124,7 @@ Blockly.Blocks['i2c128x64_display_clear'] = {
 Blockly.Blocks['i2c128x64_display_display'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("display");
+        .appendField("Show display");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(230);
