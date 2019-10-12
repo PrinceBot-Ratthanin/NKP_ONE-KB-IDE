@@ -1,8 +1,4 @@
 module.exports = {
-    initial_blocks : `<xml>
-                            <block type="arduino_init" deletable="false" x="-100" y="-50">
-                            </block><block type="arduino_loop" deletable="false" x="100" y="-50"></block>
-                      </xml>`,
     base_blocks : [ // use "blocks : [ " in normally situation but this need to override base block from esp-idf platforms
         {
             name : 'Display',
@@ -485,17 +481,6 @@ module.exports = {
                         </value>
                     </block>`
                 },
-                {
-                    xml :
-                        `<block type="time_delay_microsec">
-                        <value name="delay">
-                            <shadow type="math_number">
-                                <field name="NUM">1000</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                'time_wait_btn_press',
                 'time_sync',
                 'time_get_year',
                 'time_get_month',
