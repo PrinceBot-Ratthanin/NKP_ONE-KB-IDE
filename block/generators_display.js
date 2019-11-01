@@ -77,6 +77,19 @@ display.drawString(${value_x},${value_y},String(${value_text}));
   return code;
 };
 
+Blockly.JavaScript['i2c128x64_display_print_number'] = function(block) {
+  var value_text = Blockly.JavaScript.valueToCode(block, 'number', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_x = Blockly.JavaScript.valueToCode(block, 'x', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_y = Blockly.JavaScript.valueToCode(block, 'y', Blockly.JavaScript.ORDER_ATOMIC);
+  var dropdown_font = block.getFieldValue('font');  
+  var code = 
+`
+display.setFont(${dropdown_font});
+display.drawString(${value_x},${value_y},String(${value_text}));
+`;
+  return code;
+};
+
 Blockly.JavaScript['i2c128x64_display_draw_line'] = function(block) {
   var value_x0 = Blockly.JavaScript.valueToCode(block, 'x0', Blockly.JavaScript.ORDER_ATOMIC);
   var value_y0 = Blockly.JavaScript.valueToCode(block, 'y0', Blockly.JavaScript.ORDER_ATOMIC);

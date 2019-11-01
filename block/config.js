@@ -5,7 +5,7 @@ module.exports = {
             color : '230',
             icon : '/static/icons/icons8_picture_96px_1.png',
             blocks : [
-                {
+                /*{
                     xml : `<block type="variables_set">
                                 <field name="VAR">img1</field>
                                 <value name="VALUE">
@@ -46,7 +46,7 @@ module.exports = {
                             </shadow>
                         </value>
                     </block>`
-                },
+                },*/
                 'i2c128x64_display_clear',
                 'i2c128x64_display_display',
                 { 
@@ -55,6 +55,26 @@ module.exports = {
                         <value name="text">
                             <shadow type="basic_string">
                                 <field name="VALUE">Hello world!</field>
+                            </shadow>
+                        </value>
+                        <value name="x">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="y">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                { 
+                    xml : 
+                    `<block type="i2c128x64_display_print_number">
+                        <value name="number">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
                             </shadow>
                         </value>
                         <value name="x">

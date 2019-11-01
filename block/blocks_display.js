@@ -154,6 +154,27 @@ Blockly.Blocks['i2c128x64_display_print'] = {
  this.setTooltip("display string at x,y");
  this.setHelpUrl("");
   }
+};Blockly.Blocks['i2c128x64_display_print_number'] = {
+  init: function() {
+    this.appendValueInput("number")
+        .setCheck("Number")
+        .appendField("display number");
+    this.appendValueInput("x")
+        .setCheck("Number")
+        .appendField("at (X");
+    this.appendValueInput("y")
+        .setCheck("Number")
+        .appendField(", Y");
+    this.appendDummyInput()
+        .appendField(")  font")
+        .appendField(new Blockly.FieldDropdown([["Arial_MT_10pt","ArialMT_Plain_10"], ["Arial_MT_16pt","ArialMT_Plain_16"], ["Arial_MT_24pt","ArialMT_Plain_24"]]), "font");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(230);
+ this.setTooltip("display string at x,y");
+ this.setHelpUrl("");
+  }
 };
 
 Blockly.Blocks['i2c128x64_display_draw_line'] = {
