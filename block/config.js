@@ -228,12 +228,26 @@ module.exports = {
                 'button_1_status',
                 'Knob_status',
                 'TCSensor_status',
-                'Read_position_TCSensor',
                 'NKP_beep',
+                'encoderA_status',
+                'encoderB_status',
+                'reset_encoderA',
+                'reset_encoderB',
                 {
                     xml : 
-                    `<block type="NKP_beep_delay">
-                        <value name="_delay">
+                    `<block type="TCS_color_status">
+                        <value name="_color">
+                            <shadow type="math_number">
+                                <field name="NUM">500</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                'Init_IMU',
+                {
+                    xml : 
+                    `<block type="IMU_status">
+                        <value name="angle_">
                             <shadow type="math_number">
                                 <field name="NUM">500</field>
                             </shadow>
@@ -242,8 +256,8 @@ module.exports = {
                 },
                 {
                     xml : 
-                    `<block type="TCS_color_status">
-                        <value name="_color">
+                    `<block type="NKP_beep_delay">
+                        <value name="_delay">
                             <shadow type="math_number">
                                 <field name="NUM">500</field>
                             </shadow>
@@ -282,7 +296,7 @@ module.exports = {
                         </value>
                     </block>`
                 },
-                {
+                /*{
                     xml : 
                     `<block type="TCSensor_pin">
                         <value name="ch1">
@@ -372,7 +386,7 @@ module.exports = {
                             </shadow>
                         </value>
                     </block>`
-                },
+                },*/
                 
             ]
         },

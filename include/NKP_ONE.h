@@ -20,6 +20,11 @@
 #include "NKP_IO.h"
 #include "NKP_TCSensor.h"
 #include "Adafruit_TCS34725.h"
+#include "NKP_Interrupt.h"
+#include <MPU6050_tockn.h>
+#include <Wire.h>
+
+MPU6050 mpu6050(Wire);
 
 
 
@@ -32,6 +37,8 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS3472
 #define M1B 4
 #define M2A 16
 #define M2B 17
+
+int state_IMU = 0;
 
 void NKP_ONE(){
 
@@ -56,9 +63,30 @@ void NKP_ONE(){
   ledcAttachPin(17, 5);
   if (tcs.begin()) {
      Serial.println("Found sensor");
-  } 
-}
+  }
 
+}
+void set_IMU(){
+  Wire.begin();
+  mpu6050.begin();
+  mpu6050.calcGyroOffsets(true);
+  state_IMU = 1;
+}
+int Read_angle(int angle_){
+  if(state_IMU == 0){
+    set_IMU();
+  }
+  mpu6050.update();
+  if(angle_ == 0){
+    return mpu6050.getAngleX()+180;
+  }
+  else if(angle_ == 1){
+    return mpu6050.getAngleY()+180;
+  }
+  else if(angle_ == 2){
+    return mpu6050.getAngleZ()+180;
+  }
+}
 #define _knob 36
 int _Knob(){
   return analogRead(_knob);

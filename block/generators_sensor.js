@@ -10,6 +10,22 @@ Blockly.JavaScript['Knob_status'] = function(block) {
   var code = '(_Knob())';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
+Blockly.JavaScript['encoderA_status'] = function(block) {  
+  var code = '(encoderA())';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+Blockly.JavaScript['encoderB_status'] = function(block) {  
+  var code = '(encoderB())';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+Blockly.JavaScript['reset_encoderA'] = function(block) {  
+  var code = '(resetEncoderA())';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+Blockly.JavaScript['reset_encoderB'] = function(block) {  
+  var code = '(resetEncoderB())';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
 Blockly.JavaScript['Read_position_TCSensor'] = function(block) {  
   var code = '(readline())';
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
@@ -84,6 +100,15 @@ Blockly.JavaScript['Set_max_Tcsensor'] = function(block) {
 Blockly.JavaScript['sw1_press'] = function(block) {  
   var code = 'wait();\n';
   return code;
+};
+Blockly.JavaScript['Init_IMU'] = function(block) {  
+  var code = 'set_IMU();\n';
+  return code;
+};
+Blockly.JavaScript['IMU_status'] = function(block) {
+  var dropdown_pin = block.getFieldValue('angle_');
+  var code = `(Read_angle(${dropdown_pin}))`;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 /*Blockly.JavaScript['bme280_read_temp'] = function(block) {
   var code = 'bme280.readTempC()';
