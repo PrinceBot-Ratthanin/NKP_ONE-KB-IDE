@@ -1,5 +1,4 @@
-/*  
-#include "NKP_Switch.h"       
+/*#include "NKP_Switch.h"       
 #include "NKP_Knob.h"         
 #include "NKP_Motor_drive.h"
 #include "NKP_IO.h"
@@ -22,13 +21,16 @@
 #include "Adafruit_TCS34725.h"
 #include "NKP_Interrupt.h"
 #include <MPU6050_tockn.h>
-#include <Wire.h>
+#include "dw_font.h"
+
 
 MPU6050 mpu6050(Wire);
 
 
 
 SSD1306Wire display(0x3c, 21, 22);
+
+
 Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_1X);
 
 
@@ -39,11 +41,19 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS3472
 #define M2B 17
 
 int state_IMU = 0;
+void draw_pixel(int16_t x, int16_t y)
+{
+  display.setColor(WHITE);
+  display.setPixel(x, y);
+}
 
+void clear_pixel(int16_t x, int16_t y)
+{
+  display.setColor(BLACK);
+  display.setPixel(x, y);
+}
 void NKP_ONE(){
-
-
-
+  Wire.begin();
   Serial.begin(115200);
   pinMode(15,INPUT_PULLUP);
   display.init();
@@ -64,28 +74,62 @@ void NKP_ONE(){
   if (tcs.begin()) {
      Serial.println("Found sensor");
   }
-
 }
+
+/*void Show_Thai(String name_thai,int x,int y){
+  dw_font_init(&myfont,128,64,draw_pixel,clear_pixel);
+  dw_font_setfont(&myfont, &font_th_sarabun_new_bold30);
+  dw_font_goto(&myfont, x, y);
+  dw_font_print(&myfont, name_thai);
+}*/
 void set_IMU(){
-  Wire.begin();
+  delay(500);
+  display.clear();
+  display.setFont(ArialMT_Plain_16);
+  display.drawString(15,0,"IMU_Calibrat");
+  display.drawString(25,17,"3 Second");
+  display.drawString(18,35,"Don't Move");
+  display.display();
   mpu6050.begin();
   mpu6050.calcGyroOffsets(true);
+  mpu6050.update();
+  if((mpu6050.getAngleX()+1000) > 1100 || (mpu6050.getAngleX()+1000) < 900 ||
+  	 (mpu6050.getAngleY()+1000) > 1100 || (mpu6050.getAngleY()+1000) < 900 ||
+  	 (mpu6050.getAngleZ()+1000) > 1100 || (mpu6050.getAngleZ()+1000) < 900 )
+  {
+  	mpu6050.calcGyroOffsets(true);
+  	mpu6050.update();
+  }
+  display.clear();
+  display.drawString(0,0,"AngleX:");
+  display.drawString(70,0,String(mpu6050.getAngleX()+1000));
+  display.drawString(0,17,"AngleY:");
+  display.drawString(70,17,String(mpu6050.getAngleY()+1000));
+  display.drawString(0,35,"AngleZ:");
+  display.drawString(70,35,String(mpu6050.getAngleZ()+1000));
+  display.display();
+  delay(700);
   state_IMU = 1;
 }
+
 int Read_angle(int angle_){
-  if(state_IMU == 0){
-    set_IMU();
-  }
-  mpu6050.update();
-  if(angle_ == 0){
-    return mpu6050.getAngleX()+180;
-  }
-  else if(angle_ == 1){
-    return mpu6050.getAngleY()+180;
-  }
-  else if(angle_ == 2){
-    return mpu6050.getAngleZ()+180;
-  }
+	
+	if(state_IMU == 0){
+		set_IMU();
+	}
+	else{
+	mpu6050.update();
+	    if(angle_ == 0){
+	    	return mpu6050.getAngleX()+1000;
+		}
+		else if(angle_ == 1){
+		    return mpu6050.getAngleY()+1000;
+		}
+		else if(angle_ == 2){
+		    return mpu6050.getAngleZ()+1000;
+		}
+	}
+	
 }
 #define _knob 36
 int _Knob(){
@@ -104,6 +148,9 @@ void beep(int _delay){
   digitalWrite(_buzzer,HIGH);
   delay(_delay);
   digitalWrite(_buzzer,LOW);
+}
+float voltage_sensor(){
+  return analogRead(14)*0.00464;
 }
 void beep_on(){
   int _buzzer = 12;
@@ -152,26 +199,34 @@ float previous_error;
 }
 void wait(){
   pinMode(15,INPUT_PULLUP);
+  display.clear();
   display.setFont(ArialMT_Plain_16);
   display.drawString(25,0,"NKP_ONE");
   display.drawString(24,20,"Welcome");
+  display.drawString(0,35,"Battery:");
+  display.drawString(70,35,String(voltage_sensor()));
+  display.drawString(115,35,"V");
   display.display();
-  delay(1000);
+  delay(700);
   while(digitalRead(15) == 1){
-  display.clear();
-  
-  display.drawString(0,0,String(String("A0,")));
-  display.drawString(24,0,String(analog(A0)));
-  display.drawString(65,0,String(String("A1,")));
-  display.drawString(90,0,String(analog(A1)));
-  display.drawString(0,16,String(String("A2,")));
-  display.drawString(24,16,String(analog(A2)));
-  display.drawString(65,16,String(String("A3,")));
-  display.drawString(90,16,String(analog(A3)));
-  display.drawString(35,32,String(String("A4,")));
-  display.drawString(60,32,String(analog(A4)));
-  display.display();
-  delay(50);
+  		/*if(voltage_sensor() >1.00 && voltage_sensor() < 5.00){
+  			beep();
+  		}*/
+	  	display.clear();
+	  	display.drawString(0,0,String(String("A0::")));
+	  	display.drawString(28,0,String(analog(A0)));
+	  	display.drawString(65,0,String(String("A1::")));
+	  	display.drawString(93,0,String(analog(A1)));
+	  	display.drawString(0,16,String(String("A2::")));
+	  	display.drawString(28,16,String(analog(A2)));
+	 	display.drawString(65,16,String(String("A3::")));
+	  	display.drawString(93,16,String(analog(A3)));
+	  	display.drawString(0,32,String(String("A4::")));
+	  	display.drawString(28,32,String(analog(A4)));
+	  	display.drawString(65,32,String(String("A5::")));
+	  	display.drawString(93,32,String(analog(A5)));
+	  	display.display();
+	  	delay(50);
   }
   beep();
   display.clear();
