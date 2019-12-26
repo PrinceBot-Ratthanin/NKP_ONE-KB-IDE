@@ -233,6 +233,7 @@ module.exports = {
                 'encoderB_status',
                 'reset_encoderA',
                 'reset_encoderB',
+                'Voltage_status',
                 {
                     xml : 
                     `<block type="TCS_color_status">

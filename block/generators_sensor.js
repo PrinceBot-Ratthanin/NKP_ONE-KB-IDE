@@ -19,12 +19,12 @@ Blockly.JavaScript['encoderB_status'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 Blockly.JavaScript['reset_encoderA'] = function(block) {  
-  var code = '(resetEncoderA())';
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  var code = 'resetEncoderA();\n';
+  return code;
 };
 Blockly.JavaScript['reset_encoderB'] = function(block) {  
-  var code = '(resetEncoderB())';
-  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+  var code = 'resetEncoderB();\n';
+  return code;
 };
 Blockly.JavaScript['Read_position_TCSensor'] = function(block) {  
   var code = '(readline())';
@@ -109,6 +109,10 @@ Blockly.JavaScript['IMU_status'] = function(block) {
   var dropdown_pin = block.getFieldValue('angle_');
   var code = `(Read_angle(${dropdown_pin}))`;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+Blockly.JavaScript['Voltage_status'] = function(block) {  
+  var code = 'voltage_sensor();\n';
+  return code;
 };
 /*Blockly.JavaScript['bme280_read_temp'] = function(block) {
   var code = 'bme280.readTempC()';

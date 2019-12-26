@@ -63,10 +63,11 @@ Blockly.Blocks['reset_encoderA'] = {
     this.appendDummyInput()
         .appendField("Reset_EncoderA");
     this.setInputsInline(true);
-    this.setOutput(true, "Number");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(130);
- this.setTooltip("reset pos EncoderA Pin 26");
- this.setHelpUrl("");
+    this.setTooltip("reset pos EncoderA Pin 26");
+ 	this.setHelpUrl("");
   }
 };
 Blockly.Blocks['reset_encoderB'] = {
@@ -74,10 +75,11 @@ Blockly.Blocks['reset_encoderB'] = {
     this.appendDummyInput()
         .appendField("Reset_EncoderB");
     this.setInputsInline(true);
-    this.setOutput(true, "Number");
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
     this.setColour(130);
- this.setTooltip("reset pos EncoderB Pin 27");
- this.setHelpUrl("");
+    this.setTooltip("reset pos EncoderB Pin 27");
+ 	this.setHelpUrl("");
   }
 };
 Blockly.Blocks['Init_IMU'] = {
@@ -100,6 +102,17 @@ Blockly.Blocks['IMU_status'] = {
     this.setOutput(true, "Number");
     this.setColour(90);
  this.setTooltip("GetAngle at:");
+ this.setHelpUrl("");
+  }
+};
+Blockly.Blocks['Voltage_status'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Voltage");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(90);
+ this.setTooltip("read Voltage from Battery");
  this.setHelpUrl("");
   }
 };
