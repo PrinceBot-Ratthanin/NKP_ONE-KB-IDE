@@ -66,6 +66,7 @@ void motor(int pin,int _direction, int _Speeds) {
       ledcWrite(5, 255 - abs(_SpeedsB));
     }
   }
+  delay(1);
 }
 void MT(int speeda, int speedb,int time_speed){ 
   motor(1,1,speeda);
