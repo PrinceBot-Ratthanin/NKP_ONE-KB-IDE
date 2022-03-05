@@ -249,127 +249,6 @@ module.exports = {
                 },
                 'NKP_beep_on',
                 'NKP_beep_off',
-                {
-                    xml : 
-                    `<block type="Set_pin_Tcsensor">
-                        <value name="x0">
-                            <shadow type="math_number">
-                                <field name="NUM">25</field>
-                            </shadow>
-                        </value>
-                        <value name="x1">
-                            <shadow type="math_number">
-                                <field name="NUM">25</field>
-                            </shadow>
-                        </value>
-                        <value name="x2">
-                            <shadow type="math_number">
-                                <field name="NUM">25</field>
-                            </shadow>
-                        </value>
-                        <value name="x3">
-                            <shadow type="math_number">
-                                <field name="NUM">25</field>
-                            </shadow>
-                        </value>
-                        <value name="x4">
-                            <shadow type="math_number">
-                                <field name="NUM">25</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                /*{
-                    xml : 
-                    `<block type="TCSensor_pin">
-                        <value name="ch1">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="ch2">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="ch3">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="ch4">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="ch5">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                
-                {
-                    xml : 
-                    `<block type="Set_min_Tcsensor">
-                        <value name="x0">
-                            <shadow type="math_number">
-                                <field name="NUM">300</field>
-                            </shadow>
-                        </value>
-                        <value name="x1">
-                            <shadow type="math_number">
-                                <field name="NUM">300</field>
-                            </shadow>
-                        </value>
-                        <value name="x2">
-                            <shadow type="math_number">
-                                <field name="NUM">300</field>
-                            </shadow>
-                        </value>
-                        <value name="x3">
-                            <shadow type="math_number">
-                                <field name="NUM">300</field>
-                            </shadow>
-                        </value>
-                        <value name="x4">
-                            <shadow type="math_number">
-                                <field name="NUM">300</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },
-                {
-                    xml : 
-                    `<block type="Set_max_Tcsensor">
-                        <value name="x0">
-                            <shadow type="math_number">
-                                <field name="NUM">3500</field>
-                            </shadow>
-                        </value>
-                        <value name="x1">
-                            <shadow type="math_number">
-                                <field name="NUM">3500</field>
-                            </shadow>
-                        </value>
-                        <value name="x2">
-                            <shadow type="math_number">
-                                <field name="NUM">3500</field>
-                            </shadow>
-                        </value>
-                        <value name="x3">
-                            <shadow type="math_number">
-                                <field name="NUM">3500</field>
-                            </shadow>
-                        </value>
-                        <value name="x4">
-                            <shadow type="math_number">
-                                <field name="NUM">3500</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },*/
                 
             ]
         },
@@ -654,31 +533,127 @@ module.exports = {
                     </block>`
                 },
                 {
-                    xml : 
-                    `<block type="Run_following_of_line">
-                        <value name="_speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="_kp">
-                            <shadow type="math_number">
-                                <field name="NUM">1</field>
-                            </shadow>
-                        </value>
-                        <value name="_ki">
+              xml:
+                  `<block type="MyESP32_PID_setPin">
+                        
+                        
+                    </block>`
+          },
+          "PID_readLine",
+          {
+              xml:
+                  `<block type="MyESP32_PID_setMin">
+                        <value name="S0">
                             <shadow type="math_number">
                                 <field name="NUM">0</field>
                             </shadow>
                         </value>
-                        <value name="_kd">
+                        <value name="S1">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S2">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S3">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S4">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S5">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S6">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S7">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        
+                    </block>`
+          },
+          {
+              xml:
+                  `<block type="MyESP32_PID_setMax">
+                        <value name="S0">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S1">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S2">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S3">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S4">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S5">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S6">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        <value name="S7">
+                            <shadow type="math_number">
+                                <field name="NUM">0</field>
+                            </shadow>
+                        </value>
+                        
+                    </block>`
+          },
+          {
+              xml:
+                  `<block type="MyESP32_Run_PID">
+                        <value name="speed">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="KP">
+                            <shadow type="math_number">
+                                <field name="NUM">0.2</field>
+                            </shadow>
+                        </value>
+                        <value name="KD">
                             <shadow type="math_number">
                                 <field name="NUM">0</field>
                             </shadow>
                         </value>
                     </block>`
-                },
-                
+          },
+
+        
                 
 
                 ]

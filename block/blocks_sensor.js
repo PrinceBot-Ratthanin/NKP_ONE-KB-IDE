@@ -7,7 +7,7 @@ Blockly.Blocks['button_1_status'] = {
         .appendField(new Blockly.FieldImage("/static/icons/sw12x12.png", 20, 20, "*"))
         .appendField("SW1 is pressed");
     this.setInputsInline(true);
-    this.setOutput(true, "Number");
+    this.setOutput(true, ['Number','Boolean']);
     this.setColour(90);
  this.setTooltip("get SW1 pressed or not");
  this.setHelpUrl("");

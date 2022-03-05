@@ -17,7 +17,6 @@
 #include "NKP_Motor_drive.h"
 #include "NKP_Servo_lib.h"
 #include "NKP_IO.h"
-#include "NKP_TCSensor.h"
 #include "Adafruit_TCS34725.h"
 #include "NKP_Interrupt.h"
 #include <MPU6050_tockn.h>
@@ -39,6 +38,16 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS3472
 #define M1B 4
 #define M2A 16
 #define M2B 17
+
+int PID_NumPin = 3;
+int PID_SetupPin[] = {0,0,0,0,0,0,0,0};
+int PID_Min[] = {10,10,10,10,10,10,10,10};
+int PID_Max[] = {1000,1000,1000,1000,1000,1000,1000,1000};
+uint16_t state_on_Line = 0;
+uint32_t _lastPosition;
+// float Kp = 1;
+// float Ki = 0;
+// float Kd = 0;
 
 int state_IMU = 0;
 void draw_pixel(int16_t x, int16_t y)
@@ -162,41 +171,6 @@ void beep_off(){
   pinMode(_buzzer,OUTPUT);
   digitalWrite(_buzzer,LOW);
 }
-void Run_following_of_line(int _speed,float Kp,float Ki,float Kd){
-int16_t setpoint;
-float present_position;
-float errors = 0;
-float output = 0;
-float integral ;
-float derivative ;
-float previous_error;
-    int speed_max = _speed;
-    present_position = readline() / ((5 - 1) * 10) ;
-    setpoint = 50.0;
-    errors = setpoint - present_position;
-    integral = integral + errors ;
-    derivative = (errors - previous_error) ;
-    output = Kp * errors + Ki * integral + Kd * derivative;
-    int max_output = 70;
-    previous_error = errors;
-    if (output > max_output )output = max_output;
-    else if (output < -max_output)output = -max_output;
-    int speed_left = speed_max - output;
-    int speed_right = speed_max + output;
-    if(speed_left > 0){
-      motor(1,1,speed_left);
-    }
-    else if(speed_left <=0){
-      motor(1,2,speed_left);
-    }
-    if(speed_right > 0){
-      motor(2,1,speed_right);
-    }
-    else if(speed_right <=0){
-      motor(2,2,speed_left);
-    }
-    delay(10);
-}
 void wait(){
   pinMode(15,INPUT_PULLUP);
   display.clear();
@@ -208,6 +182,7 @@ void wait(){
   display.drawString(115,35,"V");
   display.display();
   delay(700);
+  display.setFont(ArialMT_Plain_10);
   while(digitalRead(15) == 1){
   		/*if(voltage_sensor() >1.00 && voltage_sensor() < 5.00){
   			beep();
@@ -219,14 +194,18 @@ void wait(){
 	  	display.drawString(93,0,String(analog(A1)));
 	  	display.drawString(0,16,String(String("A2::")));
 	  	display.drawString(28,16,String(analog(A2)));
-	 	display.drawString(65,16,String(String("A3::")));
+	 	  display.drawString(65,16,String(String("A3::")));
 	  	display.drawString(93,16,String(analog(A3)));
 	  	display.drawString(0,32,String(String("A4::")));
 	  	display.drawString(28,32,String(analog(A4)));
 	  	display.drawString(65,32,String(String("A5::")));
 	  	display.drawString(93,32,String(analog(A5)));
+      display.drawString(0,45,String(String("A6::")));
+      display.drawString(28,45,String(analog(A6)));
+      display.drawString(65,45,String(String("A7::")));
+      display.drawString(93,45,String(analog(A7)));
 	  	display.display();
-	  	delay(50);
+	  	delay(100);
   }
   beep();
   display.clear();
@@ -250,21 +229,67 @@ float Read_Color_TCS(int color_of_sensor){
   else if(color_of_sensor == 2){
   return b_lib*100;
  }
- }
-/*void IO15(){
-  while(sw1() == 1){
-    set_oled(0,0,"press sw1 ");
-    set_oled(0,8,"to start ");
-  }
-  set_oled_clear();
 }
-void OTA_SW1(){
-	while(sw1() == 1){
-    ArduinoOTA.handle();
-    set_oled(0,0,"press sw1 ");
-    set_oled(0,8,"to start ");
-    delay(1);
+void PID_set_Min(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_Min[0] = S0;PID_Min[1] = S1;PID_Min[2] = S2;PID_Min[3] = S3;
+  PID_Min[4] = S4;PID_Min[5] = S5;PID_Min[6] = S6;PID_Min[7] = S7;
+}
+void PID_set_Max(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_Max[0] = S0;PID_Max[1] = S1;PID_Max[2] = S2;PID_Max[3] = S3;
+  PID_Max[4] = S4;PID_Max[5] = S5;PID_Max[6] = S6;PID_Max[7] = S7;
+}
+void PID_set_Pin(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_SetupPin[0] = S0;PID_SetupPin[1] = S1;PID_SetupPin[2] = S2;PID_SetupPin[3] = S3;
+  PID_SetupPin[4] = S4;PID_SetupPin[5] = S5;PID_SetupPin[6] = S6;PID_SetupPin[7] = S7;
+}
+int readline()   
+{                
+  bool onLine = false;
+  long avg = 0;
+  long sum = 0;
+  for (uint8_t i = 0; i < PID_NumPin ; i++) 
+  {
+    long value = map(analog(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);    
+    if (value > 25) { 
+      onLine = true;
+    }
+    if (value > 5){
+      avg += (long)value * (i * 100);
+      sum += value;
+    }
   }
-  set_oled_clear();
-
-}*/
+  if (!onLine)
+  {
+    if (_lastPosition < ((PID_NumPin-1) * 100)/2){
+      return 0;
+    }
+    else{
+      return ((PID_NumPin-1) * 100);
+    }
+  }
+  _lastPosition = avg / sum;
+  return _lastPosition;
+}
+void Run_PID(int speed_motor,float kp,float kd){
+  uint16_t setpoint;
+  float present_position;
+  float errors = 0;
+  float output = 0;
+  float integral ;
+  float derivative ;
+  float previous_error ;
+    int speed_max = speed_motor;
+    present_position = readline() ;
+    setpoint = (((PID_NumPin-1) * 100)/2);
+    errors = setpoint - present_position;
+    integral = integral + errors ;
+    derivative = (errors - previous_error) ;
+    output = kp * errors + kd * derivative;
+    int max_output = 100;
+    if (output > max_output )output = max_output;
+    else if (output < -max_output)output = -max_output;
+    motor(1,speed_max - output);
+    motor(2,speed_max + output);
+    delay(1);
+    previous_error = errors;
+}

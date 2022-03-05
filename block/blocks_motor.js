@@ -219,224 +219,140 @@ Blockly.Blocks['Run_following_of_line'] = {
     this.setTooltip("");
   }
 };
-/*Blockly.Blocks['NKP_motor_forward'] = {
+Blockly.Blocks['MyESP32_PID_setPin'] = {
   init: function() {
-    this.jsonInit({
-      "message0": "%1 Move Forward at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
+    this.appendDummyInput()
+      .appendField("PID_numSensor")
+      .appendField(new Blockly.FieldDropdown([["1", "1"],["2", "2"],["3", "3"],["4", "4"],["5", "5"],["6", "6"],["7", "7"],["8", "8"]]), "numSensor");
+    this.appendDummyInput()
+      .appendField("S0_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S0_Pin");
+    this.appendDummyInput()
+      .appendField("S1_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S1_Pin");
+    this.appendDummyInput()
+      .appendField("S2_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S2_Pin");
+    this.appendDummyInput()
+      .appendField("S3_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S3_Pin");
+    this.appendDummyInput()
+      .appendField("S4_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S4_Pin");
+    this.appendDummyInput()
+      .appendField("S5_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S5_Pin");
+    this.appendDummyInput()
+      .appendField("S6_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S6_Pin");
+    this.appendDummyInput()
+      .appendField("S7_Pin")
+      .appendField(new Blockly.FieldDropdown([["-", "10"],["A0", "0"],["A1", "1"],["A2", "2"],["A3", "3"],["A4", "4"],["A5", "5"],["A6", "6"],["A7", "7"],["A8", "8"],["A9", "9"]]), "S7_Pin");
+    
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Set pin PID");
   }
 };
-
-/*Blockly.Blocks['NKP_motor_backward'] = {
+Blockly.Blocks['PID_readLine'] = {
   init: function() {
-    this.jsonInit({
-      "message0": "%1 Move Backward at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 20,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
+    this.appendDummyInput()
+        .appendField("PID_readLine");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(330);
+ this.setTooltip("PID_readLine");
+ this.setHelpUrl("");
   }
 };
-
-Blockly.Blocks['NKP_motor_forward2'] = {
+Blockly.Blocks['MyESP32_PID_setMin'] = {
   init: function() {
-    this.jsonInit({
-      "message0": "%1 Move Forward left wheel at speed %2 %% and right wheel at speed %3 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed1",
-        "check": "Number"
-      }, {
-        "type": "input_value",
-        "name": "speed2",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
+    this.appendDummyInput()
+        .appendField("PID_setMin");
+    this.appendValueInput("S0")
+      .setCheck("Number")
+      .appendField("S0");
+    this.appendValueInput("S1")
+      .setCheck("Number")
+      .appendField("S1");
+    this.appendValueInput("S2")
+      .setCheck("Number")
+      .appendField("S2");
+    this.appendValueInput("S3")
+      .setCheck("Number")
+      .appendField("S3");
+    this.appendValueInput("S4")
+      .setCheck("Number")
+      .appendField("S4");
+    this.appendValueInput("S5")
+      .setCheck("Number")
+      .appendField("S5");
+    this.appendValueInput("S6")
+      .setCheck("Number")
+      .appendField("S6");
+    this.appendValueInput("S7")
+      .setCheck("Number")
+      .appendField("S7");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Set pin PID");
   }
 };
-
-Blockly.Blocks['NKP_motor_backward2'] = {
+Blockly.Blocks['MyESP32_PID_setMax'] = {
   init: function() {
-    this.jsonInit({
-      "message0": "%1 Move Backward left wheel at speed %2 %% and right wheel at speed %3 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed1",
-        "check": "Number"
-      }, {
-        "type": "input_value",
-        "name": "speed2",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
+    this.appendDummyInput()
+        .appendField("PID_setMax");
+    this.appendValueInput("S0")
+      .setCheck("Number")
+      .appendField("S0");
+    this.appendValueInput("S1")
+      .setCheck("Number")
+      .appendField("S1");
+    this.appendValueInput("S2")
+      .setCheck("Number")
+      .appendField("S2");
+    this.appendValueInput("S3")
+      .setCheck("Number")
+      .appendField("S3");
+    this.appendValueInput("S4")
+      .setCheck("Number")
+      .appendField("S4");
+    this.appendValueInput("S5")
+      .setCheck("Number")
+      .appendField("S5");
+    this.appendValueInput("S6")
+      .setCheck("Number")
+      .appendField("S6");
+    this.appendValueInput("S7")
+      .setCheck("Number")
+      .appendField("S7");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Set pin PID");
   }
 };
-
-Blockly.Blocks['NKP_motor_turn_left'] = {
+Blockly.Blocks['MyESP32_Run_PID'] = {
   init: function() {
-    this.jsonInit({
-      "message0": "%1 Turn Left at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Run_PD_Speed:");
+    this.appendValueInput("KP")
+      .setCheck("Number")
+      .appendField("KP:");
+    this.appendValueInput("KD")
+      .setCheck("Number")
+      .appendField("KD:");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Rotate ro spin right a robot.");
   }
 };
-
-Blockly.Blocks['NKP_motor_turn_right'] = {
-  init: function() {
-    this.jsonInit({
-      "message0": "%1 Turn Right at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
-  }
-};
-
-Blockly.Blocks['NKP_motor_spin_left'] = {
-  init: function() {
-    this.jsonInit({
-      "message0": "%1 Spin Left at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
-  }
-};
-
-Blockly.Blocks['NKP_motor_spin_right'] = {
-  init: function() {
-    this.jsonInit({
-      "message0": "%1 Spin Right at speed %2 %%",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }, {
-        "type": "input_value",
-        "name": "speed",
-        "check": "Number"
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
-  }
-};
-Blockly.Blocks['NKP_motor_stop'] = {
-  init: function() {
-    this.jsonInit({
-      "message0": "%1 Stop Moving",
-      "args0": [{
-        "type": "field_image",
-        "width": 18,
-        "height": 16,
-        "alt": "*",
-        "flipRtl": false
-      }],
-      "inputsInline": true,
-      "previousStatement": null,
-      "nextStatement": null,
-      "colour": 180,
-      "tooltip": "",
-    });
-  }
-};*/
-
-
 }
