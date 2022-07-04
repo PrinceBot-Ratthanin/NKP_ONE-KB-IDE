@@ -43,11 +43,14 @@ int PID_NumPin = 3;
 int PID_SetupPin[] = {0,0,0,0,0,0,0,0};
 int PID_Min[] = {10,10,10,10,10,10,10,10};
 int PID_Max[] = {1000,1000,1000,1000,1000,1000,1000,1000};
+float errors = 0;
+float output = 0;
+float integral = 0;
+float derivative = 0;
+float previous_error = 0;
 uint16_t state_on_Line = 0;
 uint32_t _lastPosition;
-// float Kp = 1;
-// float Ki = 0;
-// float Kd = 0;
+
 
 int state_IMU = 0;
 void draw_pixel(int16_t x, int16_t y)
@@ -270,26 +273,24 @@ int readline()
   _lastPosition = avg / sum;
   return _lastPosition;
 }
-void Run_PID(int speed_motor,float kp,float kd){
-  uint16_t setpoint;
-  float present_position;
-  float errors = 0;
-  float output = 0;
-  float integral ;
-  float derivative ;
-  float previous_error ;
-    int speed_max = speed_motor;
-    present_position = readline() ;
-    setpoint = (((PID_NumPin-1) * 100)/2);
-    errors = setpoint - present_position;
-    integral = integral + errors ;
-    derivative = (errors - previous_error) ;
-    output = kp * errors + kd * derivative;
-    int max_output = 100;
-    if (output > max_output )output = max_output;
-    else if (output < -max_output)output = -max_output;
-    motor(1,speed_max - output);
-    motor(2,speed_max + output);
-    delay(1);
-    previous_error = errors;
+void Run_PID(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
+  int speed_PID = RUN_PID_speed;
+  int present_position = readline();
+  int setpoint = ((PID_NumPin - 1) * 100) / 2;
+  errors = present_position - setpoint;
+  integral = integral + errors ;
+  derivative = (errors - previous_error) ;
+  output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
+  previous_error = errors;
+  
+  int m1Speed = speed_PID + output ;
+  int m2Speed = speed_PID - output;
+  if(m1Speed < 0 )m1Speed = 0;
+  if(m2Speed < 0 )m2Speed = 0;
+
+
+  motor(1,m1Speed);
+  motor(2,m2Speed);
+  delay(1);
+  previous_error = errors;
 }

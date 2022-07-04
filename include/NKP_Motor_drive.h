@@ -8,12 +8,12 @@ void motor(int pin, int Speeds) {
     if (_SpeedsA > 255)_SpeedsA = 255;
     else if (_SpeedsA < -255)_SpeedsA = -255;
     if (Speeds > 0) {
-      ledcWrite(3, abs(_SpeedsA));
-      ledcWrite(2, 0);
+      ledcWrite(7, abs(_SpeedsA));
+      ledcWrite(6, 0);
     }
     else if (Speeds <= 0) {
-      ledcWrite(3, 0);
-      ledcWrite(2, abs(_SpeedsA));
+      ledcWrite(7, 0);
+      ledcWrite(6, abs(_SpeedsA));
     }
   }
   else if (pin == 2) {
