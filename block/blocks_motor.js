@@ -219,7 +219,7 @@ Blockly.Blocks['Run_following_of_line'] = {
     this.setTooltip("");
   }
 };
-Blockly.Blocks['MyESP32_PID_setPin'] = {
+Blockly.Blocks['NKP_ONE_PID_setPin'] = {
   init: function() {
     this.appendDummyInput()
       .appendField("PID_numSensor")
@@ -267,7 +267,7 @@ Blockly.Blocks['PID_readLine'] = {
  this.setHelpUrl("");
   }
 };
-Blockly.Blocks['MyESP32_PID_setMin'] = {
+Blockly.Blocks['NKP_ONE_PID_setMin'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("PID_setMin");
@@ -302,7 +302,7 @@ Blockly.Blocks['MyESP32_PID_setMin'] = {
     this.setTooltip("Set pin PID");
   }
 };
-Blockly.Blocks['MyESP32_PID_setMax'] = {
+Blockly.Blocks['NKP_ONE_PID_setMax'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("PID_setMax");
@@ -337,7 +337,7 @@ Blockly.Blocks['MyESP32_PID_setMax'] = {
     this.setTooltip("Set pin PID");
   }
 };
-Blockly.Blocks['MyESP32_Run_PID'] = {
+Blockly.Blocks['NKP_ONE_Run_PID'] = {
   init: function() {
     this.appendValueInput("speed")
       .setCheck("Number")

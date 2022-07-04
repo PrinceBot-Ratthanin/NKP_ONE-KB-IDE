@@ -534,7 +534,7 @@ module.exports = {
                 },
                 {
               xml:
-                  `<block type="MyESP32_PID_setPin">
+                  `<block type="NKP_ONE_PID_setPin">
                         
                         
                     </block>`
@@ -542,7 +542,7 @@ module.exports = {
           "PID_readLine",
           {
               xml:
-                  `<block type="MyESP32_PID_setMin">
+                  `<block type="NKP_ONE_PID_setMin">
                         <value name="S0">
                             <shadow type="math_number">
                                 <field name="NUM">0</field>
@@ -588,7 +588,7 @@ module.exports = {
           },
           {
               xml:
-                  `<block type="MyESP32_PID_setMax">
+                  `<block type="NKP_ONE_PID_setMax">
                         <value name="S0">
                             <shadow type="math_number">
                                 <field name="NUM">0</field>
@@ -634,7 +634,7 @@ module.exports = {
           },
           {
               xml:
-                  `<block type="MyESP32_Run_PID">
+                  `<block type="NKP_ONE_Run_PID">
                         <value name="speed">
                             <shadow type="math_number">
                                 <field name="NUM">50</field>

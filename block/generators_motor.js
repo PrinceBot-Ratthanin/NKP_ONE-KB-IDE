@@ -108,7 +108,7 @@ Blockly.JavaScript['Run_following_of_line'] = function(block) {
   code += 'Run_following_of_line( ' + value_speed + ');\n';
   return code;
 };
-Blockly.JavaScript['MyESP32_PID_setPin'] = function(block) {
+Blockly.JavaScript['NKP_ONE_PID_setPin'] = function(block) {
   var value_numSensor = block.getFieldValue('numSensor');
   var value_s0 = block.getFieldValue('S0_Pin');
   var value_s1 = block.getFieldValue('S1_Pin');
@@ -137,7 +137,7 @@ Blockly.JavaScript['PID_readLine'] = function(block) {
     var code = `readline()`;
     return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
-Blockly.JavaScript['MyESP32_PID_setMin'] = function(block) {
+Blockly.JavaScript['NKP_ONE_PID_setMin'] = function(block) {
   var value_numSensor = block.getFieldValue('numSensor');
   var value_s0 = Blockly.JavaScript.valueToCode(block, 'S0', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var value_s1 = Blockly.JavaScript.valueToCode(block, 'S1', Blockly.JavaScript.ORDER_ATOMIC) || '0';
@@ -152,7 +152,7 @@ Blockly.JavaScript['MyESP32_PID_setMin'] = function(block) {
   code += 'PID_set_Min('+value_s0+','+value_s1+','+value_s2+','+value_s3+','+value_s4+','+value_s5+','+value_s6+','+value_s7+');\n';
   return code;
 };
-Blockly.JavaScript['MyESP32_PID_setMax'] = function(block) {
+Blockly.JavaScript['NKP_ONE_PID_setMax'] = function(block) {
   var value_numSensor = block.getFieldValue('numSensor');
   var value_s0 = Blockly.JavaScript.valueToCode(block, 'S0', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var value_s1 = Blockly.JavaScript.valueToCode(block, 'S1', Blockly.JavaScript.ORDER_ATOMIC) || '0';
@@ -168,7 +168,7 @@ Blockly.JavaScript['MyESP32_PID_setMax'] = function(block) {
   return code;
 };
 
-Blockly.JavaScript['MyESP32_Run_PID'] = function(block) {
+Blockly.JavaScript['NKP_ONE_Run_PID'] = function(block) {
   var value_speed = Blockly.JavaScript.valueToCode(block, 'speed', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var value_KP = Blockly.JavaScript.valueToCode(block, 'KP', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var value_KD = Blockly.JavaScript.valueToCode(block, 'KD', Blockly.JavaScript.ORDER_ATOMIC) || '0';
