@@ -143,7 +143,7 @@ Blockly.Blocks['Read_position_TCSensor'] = {
 Blockly.Blocks['TCSensor_status'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("TCSensor pin")
+        .appendField("Light sensor pin")
         .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "pin");
     this.setInputsInline(true);
     this.setOutput(true, "Number");
