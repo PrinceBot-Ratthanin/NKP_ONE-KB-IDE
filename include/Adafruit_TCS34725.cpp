@@ -48,16 +48,9 @@ float powf(const float x, const float y) {
  *  @param  reg
  *  @param  value
  */
-void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
-  _wire->beginTransmission(_i2caddr);
-#if ARDUINO >= 100
-  _wire->write(TCS34725_COMMAND_BIT | reg);
-  _wire->write(value & 0xFF);
-#else
-  _wire->send(TCS34725_COMMAND_BIT | reg);
-  _wire->send(value & 0xFF);
-#endif
-  _wire->endTransmission();
+void Adafruit_TCS34725::write8(uint8_t reg, uint8_t value) {
+  uint8_t buffer[2] = {(uint8_t)(TCS34725_COMMAND_BIT | reg), value};
+  i2c_dev->write(buffer, 2);
 }
 
 /*!
@@ -66,20 +59,9 @@ void Adafruit_TCS34725::write8(uint8_t reg, uint32_t value) {
  *  @return value
  */
 uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
-  _wire->beginTransmission(_i2caddr);
-#if ARDUINO >= 100
-  _wire->write(TCS34725_COMMAND_BIT | reg);
-#else
-  _wire->send(TCS34725_COMMAND_BIT | reg);
-#endif
-  _wire->endTransmission();
-
-  _wire->requestFrom(_i2caddr, (uint8_t)1);
-#if ARDUINO >= 100
-  return _wire->read();
-#else
-  return _wire->receive();
-#endif
+  uint8_t buffer[1] = {(uint8_t)(TCS34725_COMMAND_BIT | reg)};
+  i2c_dev->write_then_read(buffer, 1, buffer, 1);
+  return buffer[0];
 }
 
 /*!
@@ -88,28 +70,9 @@ uint8_t Adafruit_TCS34725::read8(uint8_t reg) {
  *  @return value
  */
 uint16_t Adafruit_TCS34725::read16(uint8_t reg) {
-  uint16_t x;
-  uint16_t t;
-
-  _wire->beginTransmission(_i2caddr);
-#if ARDUINO >= 100
-  _wire->write(TCS34725_COMMAND_BIT | reg);
-#else
-  _wire->send(TCS34725_COMMAND_BIT | reg);
-#endif
-  _wire->endTransmission();
-
-  _wire->requestFrom(_i2caddr, (uint8_t)2);
-#if ARDUINO >= 100
-  t = _wire->read();
-  x = _wire->read();
-#else
-  t = _wire->receive();
-  x = _wire->receive();
-#endif
-  x <<= 8;
-  x |= t;
-  return x;
+  uint8_t buffer[2] = {(uint8_t)(TCS34725_COMMAND_BIT | reg), 0};
+  i2c_dev->write_then_read(buffer, 1, buffer, 2);
+  return (uint16_t(buffer[1]) << 8) | (uint16_t(buffer[0]) & 0xFF);
 }
 
 /*!
@@ -125,26 +88,8 @@ void Adafruit_TCS34725::enable() {
     AEN triggers an automatic integration, so if a read RGBC is
     performed too quickly, the data is not yet valid and all 0's are
     returned */
-  switch (_tcs34725IntegrationTime) {
-  case TCS34725_INTEGRATIONTIME_2_4MS:
-    delay(3);
-    break;
-  case TCS34725_INTEGRATIONTIME_24MS:
-    delay(24);
-    break;
-  case TCS34725_INTEGRATIONTIME_50MS:
-    delay(50);
-    break;
-  case TCS34725_INTEGRATIONTIME_101MS:
-    delay(101);
-    break;
-  case TCS34725_INTEGRATIONTIME_154MS:
-    delay(154);
-    break;
-  case TCS34725_INTEGRATIONTIME_700MS:
-    delay(700);
-    break;
-  }
+  /* 12/5 = 2.4, add 1 to account for integer truncation */
+  delay((256 - _tcs34725IntegrationTime) * 12 / 5 + 1);
 }
 
 /*!
@@ -164,24 +109,10 @@ void Adafruit_TCS34725::disable() {
  *  @param  gain
  *          Gain
  */
-Adafruit_TCS34725::Adafruit_TCS34725(tcs34725IntegrationTime_t it,
-                                     tcs34725Gain_t gain) {
+Adafruit_TCS34725::Adafruit_TCS34725(uint8_t it, tcs34725Gain_t gain) {
   _tcs34725Initialised = false;
   _tcs34725IntegrationTime = it;
   _tcs34725Gain = gain;
-}
-
-/*!
- *  @brief  Initializes I2C and configures the sensor
- *  @param  addr
- *          i2c address
- *  @return True if initialization was successful, otherwise false.
- */
-boolean Adafruit_TCS34725::begin(uint8_t addr) {
-  _i2caddr = addr;
-  _wire = &Wire;
-
-  return init();
 }
 
 /*!
@@ -193,19 +124,9 @@ boolean Adafruit_TCS34725::begin(uint8_t addr) {
  *  @return True if initialization was successful, otherwise false.
  */
 boolean Adafruit_TCS34725::begin(uint8_t addr, TwoWire *theWire) {
-  _i2caddr = addr;
-  _wire = theWire;
-
-  return init();
-}
-
-/*!
- *  @brief  Initializes I2C and configures the sensor
- *  @return True if initialization was successful, otherwise false.
- */
-boolean Adafruit_TCS34725::begin() {
-  _i2caddr = TCS34725_ADDRESS;
-  _wire = &Wire;
+  if (i2c_dev)
+    delete i2c_dev;
+  i2c_dev = new Adafruit_I2CDevice(addr, theWire);
 
   return init();
 }
@@ -215,11 +136,12 @@ boolean Adafruit_TCS34725::begin() {
  *  @return True if initialization was successful, otherwise false.
  */
 boolean Adafruit_TCS34725::init() {
-  _wire->begin();
+  if (!i2c_dev->begin())
+    return false;
 
   /* Make sure we're actually connected */
   uint8_t x = read8(TCS34725_ID);
-  if ((x != 0x44) && (x != 0x10)) {
+  if ((x != 0x4d) && (x != 0x44) && (x != 0x10)) {
     return false;
   }
   _tcs34725Initialised = true;
@@ -239,7 +161,7 @@ boolean Adafruit_TCS34725::init() {
  *  @param  it
  *          Integration Time
  */
-void Adafruit_TCS34725::setIntegrationTime(tcs34725IntegrationTime_t it) {
+void Adafruit_TCS34725::setIntegrationTime(uint8_t it) {
   if (!_tcs34725Initialised)
     begin();
 
@@ -288,26 +210,8 @@ void Adafruit_TCS34725::getRawData(uint16_t *r, uint16_t *g, uint16_t *b,
   *b = read16(TCS34725_BDATAL);
 
   /* Set a delay for the integration time */
-  switch (_tcs34725IntegrationTime) {
-  case TCS34725_INTEGRATIONTIME_2_4MS:
-    delay(3);
-    break;
-  case TCS34725_INTEGRATIONTIME_24MS:
-    delay(24);
-    break;
-  case TCS34725_INTEGRATIONTIME_50MS:
-    delay(50);
-    break;
-  case TCS34725_INTEGRATIONTIME_101MS:
-    delay(101);
-    break;
-  case TCS34725_INTEGRATIONTIME_154MS:
-    delay(154);
-    break;
-  case TCS34725_INTEGRATIONTIME_700MS:
-    delay(700);
-    break;
-  }
+  /* 12/5 = 2.4, add 1 to account for integer truncation */
+  delay((256 - _tcs34725IntegrationTime) * 12 / 5 + 1);
 }
 
 /*!
@@ -420,8 +324,8 @@ uint16_t Adafruit_TCS34725::calculateColorTemperature_dn40(uint16_t r,
                                                            uint16_t b,
                                                            uint16_t c) {
   uint16_t r2, b2; /* RGB values minus IR component */
-  uint16_t sat;        /* Digital saturation level */
-  uint16_t ir;         /* Inferred IR content */
+  uint16_t sat;    /* Digital saturation level */
+  uint16_t ir;     /* Inferred IR content */
 
   if (c == 0) {
     return 0;
@@ -516,7 +420,7 @@ uint16_t Adafruit_TCS34725::calculateLux(uint16_t r, uint16_t g, uint16_t b) {
 }
 
 /*!
- *  @brief  Sets inerrupt for TCS34725
+ *  @brief  Sets interrupt for TCS34725
  *  @param  i
  *          Interrupt (True/False)
  */
@@ -534,13 +438,8 @@ void Adafruit_TCS34725::setInterrupt(boolean i) {
  *  @brief  Clears inerrupt for TCS34725
  */
 void Adafruit_TCS34725::clearInterrupt() {
-  _wire->beginTransmission(_i2caddr);
-#if ARDUINO >= 100
-  _wire->write(TCS34725_COMMAND_BIT | 0x66);
-#else
-  _wire->send(TCS34725_COMMAND_BIT | 0x66);
-#endif
-  _wire->endTransmission();
+  uint8_t buffer[1] = {TCS34725_COMMAND_BIT | 0x66};
+  i2c_dev->write(buffer, 1);
 }
 
 /*!
