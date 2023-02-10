@@ -74,12 +74,8 @@ void MT(int speeda, int speedb,int time_speed){
   delay(time_speed);
 }
 void ao(){
-  // motor(1,1,0);
-  // motor(2,1,0);
-  ledcWrite(4, 255);
-  ledcWrite(5, 255);
-  ledcWrite(6, 255);
-  ledcWrite(7, 255);
+  motor(1,1,0);
+  motor(2,1,0);
 }
 void aot(int _timer){
   motor(1,1,0);
