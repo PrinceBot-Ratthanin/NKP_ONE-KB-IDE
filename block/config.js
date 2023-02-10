@@ -1,7 +1,9 @@
+const dirIcon = Vue.prototype.$global.board.board_info.dir;
 module.exports = {
     base_blocks : [ // use "blocks : [ " in normally situation but this need to override base block from esp-idf platforms
         {
             name : 'Display',
+            index: 1,
             color : '230',
             icon : '/static/icons/icons8_picture_96px_1.png',
             blocks : [
@@ -203,6 +205,7 @@ module.exports = {
         },
         {
             name : 'Sensor',
+            index: 2,
             color : '230',
             icon : '/static/icons/icons8_thermometer_96px.png',
             blocks : [
@@ -254,6 +257,7 @@ module.exports = {
         },
         {
             name : 'GPIO',
+            index: 3,
             color : '230',
             icon : '/static/icons/icons8_electronics_96px.png',
             blocks : [
@@ -364,6 +368,7 @@ module.exports = {
         },        
         {
             name : 'Time',
+            index: 4,
             color : '230',
             icon : '/static/icons/icons8_Story_Time_96px.png',
             blocks : [
@@ -391,8 +396,10 @@ module.exports = {
         },        
         {
             name : 'Motor',
+            index: 5,
             color : '230',
-            icon: "/static/icons/icons8_workflow_128px.png",
+            //icon: "/static/icons/icons8_workflow_128px.png",
+            icon: `file:///${dirIcon}/static/motor.png`,
             blocks : [
 
                 
@@ -532,126 +539,258 @@ module.exports = {
                         </value>
                     </block>`
                 },
+                
+
+        
+                
+
+                ]
+        },
+        {
+            name : 'PID',
+            index: 6,
+            color : '230',
+            //icon: "/static/icons/icons8_workflow_128px.png",
+            icon: `file:///${dirIcon}/static/PID.png`,
+            blocks : [
                 {
-              xml:
-                  `<block type="NKP_ONE_PID_setPin">
-                        
-                        
-                    </block>`
-          },
-          "PID_readLine",
-          {
-              xml:
-                  `<block type="NKP_ONE_PID_setMin">
-                        <value name="S0">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S1">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S2">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S3">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S4">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S5">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S6">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S7">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        
-                    </block>`
-          },
-          {
-              xml:
-                  `<block type="NKP_ONE_PID_setMax">
-                        <value name="S0">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S1">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S2">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S3">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S4">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S5">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S6">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="S7">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        
-                    </block>`
-          },
-          {
-              xml:
-                  `<block type="NKP_ONE_Run_PID">
-                        <value name="speed">
-                            <shadow type="math_number">
-                                <field name="NUM">50</field>
-                            </shadow>
-                        </value>
-                        <value name="KP">
-                            <shadow type="math_number">
-                                <field name="NUM">0.2</field>
-                            </shadow>
-                        </value>
-                        <value name="KD">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                    </block>`
-          },
+                xml: `<sep gap="32"></sep><label text="ขั้นตอนการใช้งาน" web-class="headline"></label>`
+              },
+              {
+                xml: `<sep gap="25"></sep><label text="1.ตั้งค่าการเชื่อมต่อเซ็นเซอร์ เริ่มจากซ้ายไปขวา" web-class="headline"></label>`
+              },
+              {
+                xml: `<sep gap="25"></sep><label text="2.ตั้งค่า Min = ค่าที่อ่านจากพื้นสีดำ" web-class="headline"></label>`
+              },
+              {
+                xml: `<sep gap="25"></sep><label text="3.ตั้งค่า Max = ค่าที่อ่านจากพื้นสีขาว" web-class="headline"></label>`
+              },
+                {xml:`<block type="NKP_ONE_PID_setPin"></block>`},
+	          "PID_readLine",
+	          {xml:
+	                  `<block type="NKP_ONE_PID_setMin">
+	                        <value name="S0">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S1">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S2">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S3">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S4">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S5">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S6">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S7">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        
+	                    </block>`
+	          },
+	          {
+	              xml:
+	                  `<block type="NKP_ONE_PID_setMax">
+	                        <value name="S0">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S1">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S2">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S3">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S4">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S5">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S6">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S7">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        
+	                    </block>`
+	          },
+	          {
+	              xml:
+	                  `<block type="NKP_ONE_Run_PID">
+	                        <value name="speed">
+	                            <shadow type="math_number">
+	                                <field name="NUM">50</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="KP">
+	                            <shadow type="math_number">
+	                                <field name="NUM">1</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="KD">
+	                            <shadow type="math_number">
+	                                <field name="NUM">0</field>
+	                            </shadow>
+	                        </value>
+	                    </block>`
+	          },
+	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
+	          "PID_readLine_B",
+	          {xml:
+	                  `<block type="NKP_ONE_PID_setMin_B">
+	                        <value name="S0">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S1">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S2">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S3">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S4">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S5">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S6">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S7">
+	                            <shadow type="math_number">
+	                                <field name="NUM">100</field>
+	                            </shadow>
+	                        </value>
+	                        
+	                    </block>`
+	          },
+	          {
+	              xml:
+	                  `<block type="NKP_ONE_PID_setMax_B">
+	                        <value name="S0">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S1">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S2">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S3">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S4">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S5">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S6">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="S7">
+	                            <shadow type="math_number">
+	                                <field name="NUM">4000</field>
+	                            </shadow>
+	                        </value>
+	                        
+	                    </block>`
+	          },
+	          {
+	              xml:
+	                  `<block type="NKP_ONE_Run_PID_B">
+	                        <value name="speed">
+	                            <shadow type="math_number">
+	                                <field name="NUM">50</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="KP">
+	                            <shadow type="math_number">
+	                                <field name="NUM">1</field>
+	                            </shadow>
+	                        </value>
+	                        <value name="KD">
+	                            <shadow type="math_number">
+	                                <field name="NUM">0</field>
+	                            </shadow>
+	                        </value>
+	                    </block>`
+	          },
 
         
                 
@@ -660,12 +799,14 @@ module.exports = {
         },
         {
             name : 'Variables',
+            index: 7,
             color : '230',
             icon : '/static/icons/icons8_variable_96px.png',
             custom : 'VARIABLE'
         },
         {
             name : 'Math',
+            index: 8,
             color : '230',
             icon : '/static/icons/calculator.png',
             blocks : [
@@ -760,6 +901,7 @@ module.exports = {
         },
         {
             name : 'Logic',
+            index: 9,
             color : '230',
             icon : '/static/icons/icons8_serial_tasks_96px.png',
             blocks : [
@@ -775,6 +917,7 @@ module.exports = {
         },
         {
             name : 'Loops',
+            index: 10,
             color : '230',
             icon : '/static/icons/icons8_repeat_96px.png',
             blocks : [
@@ -805,6 +948,7 @@ module.exports = {
         },
         {
             name : 'Advanced',
+            index: 11,
             color : '195',
             icon : '/static/icons/icons8_hacker_128px.png',
             blocks : [

@@ -1,10 +1,4 @@
-/*#include "NKP_Switch.h"       
-#include "NKP_Knob.h"         
-#include "NKP_Motor_drive.h"
-#include "NKP_IO.h"
-#include "NKP_Buzzer.h"
-#include "NKP_TCSensor.h"
-#include "NKP_OTA.h"*/
+
 #include <Arduino.h>
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -51,6 +45,18 @@ float previous_error = 0;
 uint16_t state_on_Line = 0;
 uint32_t _lastPosition;
 
+int PID_NumPin_B = 3;
+int PID_SetupPin_B[] = {0,0,0,0,0,0,0,0};
+int PID_Min_B[] = {10,10,10,10,10,10,10,10};
+int PID_Max_B[] = {1000,1000,1000,1000,1000,1000,1000,1000};
+float errors_B = 0;
+float output_B = 0;
+float integral_B = 0;
+float derivative_B = 0;
+float previous_error_B = 0;
+uint16_t state_on_Line_B = 0;
+uint32_t _lastPosition_B;
+
 
 int state_IMU = 0;
 void draw_pixel(int16_t x, int16_t y)
@@ -75,10 +81,10 @@ void NKP_ONE(){
   pinMode(M1B,OUTPUT);
   pinMode(M2A,OUTPUT);
   pinMode(M2B,OUTPUT);
-  ledcSetup(6, 5000, 8);
-  ledcSetup(7, 5000, 8);
-  ledcSetup(4, 5000, 8);
-  ledcSetup(5, 5000, 8);
+  ledcSetup(6, 500, 8);
+  ledcSetup(7, 500, 8);
+  ledcSetup(4, 500, 8);
+  ledcSetup(5, 500, 8);
   ledcAttachPin(2, 6);
   ledcAttachPin(4, 7);
   ledcAttachPin(16, 4);
@@ -180,9 +186,6 @@ void wait(){
   display.setFont(ArialMT_Plain_16);
   display.drawString(25,0,"NKP_ONE");
   display.drawString(24,20,"Welcome");
-  display.drawString(0,35,"Battery:");
-  display.drawString(70,35,String(voltage_sensor()));
-  display.drawString(115,35,"V");
   display.display();
   delay(700);
   display.setFont(ArialMT_Plain_10);
@@ -252,8 +255,9 @@ int readline()
   long sum = 0;
   for (uint8_t i = 0; i < PID_NumPin ; i++) 
   {
-    long value = map(analog(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);    
-    if (value > 25) { 
+    long value = map(analog(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);
+    value = constrain(value,0,100);      
+    if (value > 20) { 
       onLine = true;
     }
     if (value > 5){
@@ -281,16 +285,81 @@ void Run_PID(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
   integral = integral + errors ;
   derivative = (errors - previous_error) ;
   output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-  previous_error = errors;
   
   int m1Speed = speed_PID + output ;
   int m2Speed = speed_PID - output;
-  if(m1Speed < 0 )m1Speed = 0;
-  if(m2Speed < 0 )m2Speed = 0;
+  // m1Speed = constrain(m1Speed,-RUN_PID_speed,RUN_PID_speed);
+  // m2Speed = constrain(m2Speed,-RUN_PID_speed,RUN_PID_speed);
+  // if(m1Speed < 0 )m1Speed = 0;
+  // if(m2Speed < 0 )m2Speed = 0;
 
 
   motor(1,m1Speed);
   motor(2,m2Speed);
   delay(1);
   previous_error = errors;
+}
+
+void PID_set_Min_B(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_Min_B[0] = S0;PID_Min_B[1] = S1;PID_Min_B[2] = S2;PID_Min_B[3] = S3;
+  PID_Min_B[4] = S4;PID_Min_B[5] = S5;PID_Min_B[6] = S6;PID_Min_B[7] = S7;
+}
+void PID_set_Max_B(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_Max_B[0] = S0;PID_Max_B[1] = S1;PID_Max_B[2] = S2;PID_Max_B[3] = S3;
+  PID_Max_B[4] = S4;PID_Max_B[5] = S5;PID_Max_B[6] = S6;PID_Max_B[7] = S7;
+}
+void PID_set_Pin_B(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
+  PID_SetupPin_B[0] = S0;PID_SetupPin_B[1] = S1;PID_SetupPin_B[2] = S2;PID_SetupPin_B[3] = S3;
+  PID_SetupPin_B[4] = S4;PID_SetupPin_B[5] = S5;PID_SetupPin_B[6] = S6;PID_SetupPin_B[7] = S7;
+}
+int readline_B()   
+{                
+  bool onLine_B = false;
+  long avg_B = 0;
+  long sum_B = 0;
+  for (uint8_t i = 0; i < PID_NumPin_B ; i++) 
+  {
+    long value_B = map(analog(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 100, 0);
+     value_B = constrain(value_B,0,100);    
+    if (value_B > 20) { 
+      onLine_B = true;
+    }
+    if (value_B > 5){
+      avg_B += (long)value_B * (i * 100);
+      sum_B += value_B;
+    }
+  }
+  if (!onLine_B)
+  {
+    if (_lastPosition_B < ((PID_NumPin_B-1) * 100)/2){
+      return 0;
+    }
+    else{
+      return ((PID_NumPin_B-1) * 100);
+    }
+  }
+  _lastPosition_B = avg_B / sum_B;
+  return _lastPosition_B;
+}
+void Run_PID_B(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
+  int speed_PID_B = RUN_PID_speed;
+  int present_position_B = readline_B();
+  int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
+  errors_B = present_position_B - setpoint_B;
+  integral_B = integral_B + errors_B ;
+  derivative_B = (errors_B - previous_error_B) ;
+  output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
+  
+  int m1Speed = speed_PID_B - output_B ;
+  int m2Speed = speed_PID_B + output_B;
+  m1Speed = constrain(m1Speed,-RUN_PID_speed,RUN_PID_speed);
+  m2Speed = constrain(m2Speed,-RUN_PID_speed,RUN_PID_speed);
+  // if(m1Speed < 0 )m1Speed = 0;
+  // if(m2Speed < 0 )m2Speed = 0;
+
+
+  motor(1,-m1Speed);
+  motor(2,-m2Speed);
+  delay(1);
+  previous_error_B = errors_B;
 }
