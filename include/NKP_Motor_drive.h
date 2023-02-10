@@ -76,6 +76,8 @@ void MT(int speeda, int speedb,int time_speed){
 void ao(){
   motor(1,1,0);
   motor(2,1,0);
+  motor(1,0);
+  motor(2,0);
 }
 void aot(int _timer){
   motor(1,1,0);
