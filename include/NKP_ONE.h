@@ -81,10 +81,10 @@ void NKP_ONE(){
   pinMode(M1B,OUTPUT);
   pinMode(M2A,OUTPUT);
   pinMode(M2B,OUTPUT);
-  ledcSetup(6, 500, 8);
-  ledcSetup(7, 500, 8);
-  ledcSetup(4, 500, 8);
-  ledcSetup(5, 500, 8);
+  ledcSetup(6, 1500, 8);
+  ledcSetup(7, 1500, 8);
+  ledcSetup(4, 1500, 8);
+  ledcSetup(5, 1500, 8);
   ledcAttachPin(2, 6);
   ledcAttachPin(4, 7);
   ledcAttachPin(16, 4);
