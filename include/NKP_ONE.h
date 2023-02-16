@@ -36,7 +36,7 @@ Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS3472
 int PID_NumPin = 3;
 int PID_SetupPin[] = {0,0,0,0,0,0,0,0};
 int PID_Min[] = {10,10,10,10,10,10,10,10};
-int PID_Max[] = {1000,1000,1000,1000,1000,1000,1000,1000};
+int PID_Max[] = {4000,4000,4000,4000,4000,4000,4000,4000};
 float errors = 0;
 float output = 0;
 float integral = 0;
@@ -44,11 +44,12 @@ float derivative = 0;
 float previous_error = 0;
 uint16_t state_on_Line = 0;
 uint32_t _lastPosition;
+bool first_state_for_calribrate = 0;
 
 int PID_NumPin_B = 3;
 int PID_SetupPin_B[] = {0,0,0,0,0,0,0,0};
 int PID_Min_B[] = {10,10,10,10,10,10,10,10};
-int PID_Max_B[] = {1000,1000,1000,1000,1000,1000,1000,1000};
+int PID_Max_B[] = {4000,4000,4000,4000,4000,4000,4000,4000};
 float errors_B = 0;
 float output_B = 0;
 float integral_B = 0;
@@ -81,10 +82,10 @@ void NKP_ONE(){
   pinMode(M1B,OUTPUT);
   pinMode(M2A,OUTPUT);
   pinMode(M2B,OUTPUT);
-  ledcSetup(6, 1500, 8);
-  ledcSetup(7, 1500, 8);
-  ledcSetup(4, 1500, 8);
-  ledcSetup(5, 1500, 8);
+  ledcSetup(6,1000, 8);
+  ledcSetup(7, 1000, 8);
+  ledcSetup(4, 1000, 8);
+  ledcSetup(5, 1000, 8);
   ledcAttachPin(2, 6);
   ledcAttachPin(4, 7);
   ledcAttachPin(16, 4);
@@ -248,6 +249,47 @@ void PID_set_Pin(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
   PID_SetupPin[0] = S0;PID_SetupPin[1] = S1;PID_SetupPin[2] = S2;PID_SetupPin[3] = S3;
   PID_SetupPin[4] = S4;PID_SetupPin[5] = S5;PID_SetupPin[6] = S6;PID_SetupPin[7] = S7;
 }
+void setCalibrate(int round){
+  display.clear();
+  display.setFont(ArialMT_Plain_24);
+  display.drawString(0,0,"Front Sensor");
+  display.drawString(0,25,"  Calribrate  ");
+  display.display();
+  if(first_state_for_calribrate == 0){
+    for (uint8_t i = 0; i < PID_NumPin; i++)
+    {
+      PID_Max[i] = 0;
+      PID_Min[i] = 4095;
+    }
+    first_state_for_calribrate = 1;
+  }
+  for(int roundOfCalribtate = 0; roundOfCalribtate < round ;roundOfCalribtate++ ){
+    for (uint8_t i = 0; i < PID_NumPin; i++)
+    {
+      if(analog(PID_SetupPin[i]) > PID_Max[i] || PID_Max[i] >= 4095 ){
+        PID_Max[i]  = analog(PID_SetupPin[i]);
+        if(PID_Max[i] > 4095 )PID_Max[i] = 4095;
+      }
+    }
+    for (uint8_t i = 0; i < PID_NumPin; i++)
+    {
+      if(analog(PID_SetupPin[i]) < PID_Min[i] || PID_Min[i] == 0){
+        PID_Min[i] = analog(PID_SetupPin[i]);
+        if(PID_Min[i] < 0) PID_Min[i] = 0;
+      }
+    }
+    delay(1);
+  }
+  display.clear();
+    
+}
+int ReadSensorMinValue(uint8_t _Pin){
+    return PID_Min[_Pin];
+}
+int ReadSensorMaxValue(uint8_t _Pin){
+    return PID_Max[_Pin];
+}
+
 int readline()   
 {                
   bool onLine = false;
@@ -278,22 +320,16 @@ int readline()
   return _lastPosition;
 }
 void Run_PID(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  int speed_PID = RUN_PID_speed;
+  
   int present_position = readline();
   int setpoint = ((PID_NumPin - 1) * 100) / 2;
   errors = present_position - setpoint;
   integral = integral + errors ;
   derivative = (errors - previous_error) ;
   output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
-  
-  int m1Speed = speed_PID + output ;
-  int m2Speed = speed_PID - output;
-  // m1Speed = constrain(m1Speed,-RUN_PID_speed,RUN_PID_speed);
-  // m2Speed = constrain(m2Speed,-RUN_PID_speed,RUN_PID_speed);
-  // if(m1Speed < 0 )m1Speed = 0;
-  // if(m2Speed < 0 )m2Speed = 0;
-
-
+    
+  int m1Speed = RUN_PID_speed + output ;
+  int m2Speed = RUN_PID_speed - output;
   motor(1,m1Speed);
   motor(2,m2Speed);
   delay(1);
@@ -342,7 +378,6 @@ int readline_B()
   return _lastPosition_B;
 }
 void Run_PID_B(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
-  int speed_PID_B = RUN_PID_speed;
   int present_position_B = readline_B();
   int setpoint_B = ((PID_NumPin_B - 1) * 100) / 2;
   errors_B = present_position_B - setpoint_B;
@@ -350,13 +385,8 @@ void Run_PID_B(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
   derivative_B = (errors_B - previous_error_B) ;
   output_B = RUN_PID_KP * errors_B  + RUN_PID_KD * derivative_B;
   
-  int m1Speed = speed_PID_B - output_B ;
-  int m2Speed = speed_PID_B + output_B;
-  m1Speed = constrain(m1Speed,-RUN_PID_speed,RUN_PID_speed);
-  m2Speed = constrain(m2Speed,-RUN_PID_speed,RUN_PID_speed);
-  // if(m1Speed < 0 )m1Speed = 0;
-  // if(m2Speed < 0 )m2Speed = 0;
-
+  int m1Speed = RUN_PID_speed - output_B ;
+  int m2Speed = RUN_PID_speed + output_B;
 
   motor(1,-m1Speed);
   motor(2,-m2Speed);

@@ -8,12 +8,12 @@ void motor(int pin, int Speeds) {
     if (_SpeedsA > 255)_SpeedsA = 255;
     else if (_SpeedsA < -255)_SpeedsA = -255;
     if (Speeds > 0) {
-      ledcWrite(7, abs(_SpeedsA));
-      ledcWrite(6, 0);
+      ledcWrite(7, 255);
+      ledcWrite(6, 255-abs(_SpeedsA));
     }
     else if (Speeds <= 0) {
-      ledcWrite(7, 0);
-      ledcWrite(6, abs(_SpeedsA));
+      ledcWrite(7, 255-abs(_SpeedsA));
+      ledcWrite(6, 255);
     }
   }
   else if (pin == 2) {
@@ -23,12 +23,12 @@ void motor(int pin, int Speeds) {
     if (_SpeedsB > 255)_SpeedsB = 255;
     else if (_SpeedsB < -255)_SpeedsB = -255;
     if (Speeds > 0) {
-      ledcWrite(5, abs(_SpeedsB));
-      ledcWrite(4, 0);
+      ledcWrite(5, 255);
+      ledcWrite(4, 255-abs(_SpeedsB));
     }
     else if (Speeds <= 0) {
-      ledcWrite(5, 0);
-      ledcWrite(4, abs(_SpeedsB));
+      ledcWrite(5, 255-abs(_SpeedsB));
+      ledcWrite(4, 255);
     }
   }
 }
@@ -74,8 +74,9 @@ void MT(int speeda, int speedb,int time_speed){
   delay(time_speed);
 }
 void ao(){
-  motor(1,1,0);
-  motor(2,1,0);
+  motor(2,0);
+  motor(1,0);
+  delay(1);
   motor(1,0);
   motor(2,0);
 }
