@@ -157,6 +157,34 @@ Blockly.Blocks['NKP_ONE_Run_PID'] = {
   }
 };
 
+Blockly.Blocks['set_calibrate_Front_sensor'] = {
+  init: function() {
+    this.appendValueInput("Round")
+      .setCheck("Number")
+      .appendField("Calibrate Front Sensor");
+    this.appendDummyInput()
+      .appendField("round");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+
+Blockly.Blocks['Read_Ref_Front_Sensor'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Ref Front sensor:")
+      .appendField(new Blockly.FieldDropdown([["S1", "0"],["S2", "1"],["S3", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
+
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+
 
 
 Blockly.Blocks['Run_following_of_line_B'] = {

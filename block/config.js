@@ -566,7 +566,7 @@ module.exports = {
                 xml: `<sep gap="25"></sep><label text="3.ตั้งค่า Max = ค่าที่อ่านจากพื้นสีขาว" web-class="headline"></label>`
               },
                 {xml:`<block type="NKP_ONE_PID_setPin"></block>`},
-	          "PID_readLine",
+	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin">
 	                        <value name="S0">
@@ -678,8 +678,21 @@ module.exports = {
 	                        </value>
 	                    </block>`
 	          },
+              "PID_readLine",
+              // {xml:`<block type="Read_Min_Front_Sensor"></block>`},
+               {xml:
+                      `<block type="set_calibrate_Front_sensor">
+                            <value name="Round">
+                                <shadow type="math_number">
+                                    <field name="NUM">100</field>
+                                </shadow>
+                            </value>
+                            
+                        </block>`
+              },
+              "Read_Ref_Front_Sensor",
 	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
-	          "PID_readLine_B",
+	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin_B">
 	                        <value name="S0">
@@ -771,6 +784,7 @@ module.exports = {
 	                        
 	                    </block>`
 	          },
+              "PID_readLine_B",
 	          {
 	              xml:
 	                  `<block type="NKP_ONE_Run_PID_B">

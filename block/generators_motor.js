@@ -30,6 +30,9 @@ Blockly.JavaScript['NKP_motor_forward'] = function(block) {
   var code = '';
   code += 'motor(1, 1, ' + value_speed + ');\t';
   code += 'motor(2, 1, ' + value_speed + ');\n';
+  // code += 'motor(1,' + value_speed + ');\t';
+  // code += 'motor(2,' + value_speed + ');\n';
+  //code += 'errors = 0;integral =0 ;derivative =0;output =0;\n';
   return code;
 };
 
@@ -75,6 +78,7 @@ Blockly.JavaScript['NKP_motor_spin_right'] = function(block) {
 
 Blockly.JavaScript['NKP_motor_stop'] = function(block) {  
   var code = 'ao();\n';
+  //code += 'errors = 0;integral =0 ;derivative =0;output =0;\n';
   return code;
 };
 

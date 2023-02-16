@@ -78,6 +78,22 @@ Blockly.JavaScript['NKP_ONE_Run_PID'] = function(block) {
   code += 'Run_PID('+ value_speed+','+value_KP+','+value_KD+');\n';
   return code;
 };
+Blockly.JavaScript['set_calibrate_Front_sensor'] = function(block) {
+  var value_Round = Blockly.JavaScript.valueToCode(block, 'Round', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = '';
+  code += 'setCalibrate(' + value_Round  + ');\n';
+  return code;
+};
+Blockly.JavaScript['Read_Ref_Front_Sensor'] = function(block) {
+ 
+  var value_Sensor_Pin = block.getFieldValue('Sensor_Pin');
+  
+  var code = '';
+  code += '(ReadSensorMinValue(' + value_Sensor_Pin+')+ReadSensorMaxValue(' + value_Sensor_Pin+'))/2';
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
 
 
 
