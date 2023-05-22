@@ -121,7 +121,7 @@ Blockly.JavaScript['Voltage_status'] = function(block) {
   var code = `
   #EXTINC#include "QMC5883LCompass.h" #END
   #VARIABLE QMC5883LCompass compass; #END
-  #SETUP compass.init(); \n compass.setCalibration(-983, 1491, -1027, 1620, -281, 0); #END
+  #SETUP compass.init(); \n #END
   compass.read();\n${statements_code}`;
   return code;
   };
