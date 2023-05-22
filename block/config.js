@@ -214,11 +214,13 @@ module.exports = {
                 'Knob_status',
                 'TCSensor_status',
                 'NKP_beep',
+                'Compass_getData',
+                'Compass_Read',
                 'encoderA_status',
                 'encoderB_status',
                 'reset_encoderA',
                 'reset_encoderB',
-                'Voltage_status',
+                //'Voltage_status',
                 {
                     xml : 
                     `<block type="TCS_color_status">
