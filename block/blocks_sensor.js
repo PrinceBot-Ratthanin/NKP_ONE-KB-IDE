@@ -5,7 +5,7 @@ module.exports = function(Blockly){
     init: function() {
       this.appendDummyInput()
           .appendField(new Blockly.FieldImage("/static/icons/sw12x12.png", 20, 20, "*"))
-          .appendField("SW1 is pressed");
+          .appendField("SW1 Status:");
       this.setInputsInline(true);
       this.setOutput(true, ['Number','Boolean']);
       this.setColour(90);
@@ -145,6 +145,22 @@ module.exports = function(Blockly){
       this.appendDummyInput()
           .appendField("Light sensor pin")
           .appendField(new Blockly.FieldDropdown([["A0","39"],["A1","34"], ["A2","32"], ["A3","35"], ["A4","25"], ["A5","33"], ["A6","27"], ["A7","26"], ["A8","13"], ["A9","14"]]), "pin");
+      this.setInputsInline(true);
+      this.setOutput(true, "Number");
+      this.setColour(90);
+   this.setTooltip("read input pin");
+   this.setHelpUrl("");
+    }
+  };
+    Blockly.Blocks['Ultrasonic_Sensor'] = {
+    init: function() {
+      this.appendDummyInput()
+          .appendField(" Read Ultrasonic (cm) Echo:")
+          .appendField(new Blockly.FieldDropdown([ ["A2(32)","32"], ["A4(25)","25"], ["A5(33)","33"], ["A6(27)","27"], ["A7(26)","26"], ["A8(13)","13"], ["A9(14)","14"]]), "pin_Trig");
+      this.appendDummyInput()
+          .appendField("Trig:")
+          .appendField(new Blockly.FieldDropdown([ ["A2(32)","32"], ["A4(25)","25"], ["A5(33)","33"], ["A6(27)","27"], ["A7(26)","26"], ["A8(13)","13"], ["A9(14)","14"]]), "pin_Echo");
+      
       this.setInputsInline(true);
       this.setOutput(true, "Number");
       this.setColour(90);
@@ -335,5 +351,6 @@ module.exports = function(Blockly){
    this.setHelpUrl("");
     }
   };
+
 
 }

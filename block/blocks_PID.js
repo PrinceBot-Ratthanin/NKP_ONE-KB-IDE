@@ -57,6 +57,19 @@ Blockly.Blocks['NKP_ONE_PID_setPin'] = {
     this.setTooltip("Set pin PID");
   }
 };
+Blockly.Blocks['NKP_ONE_PID_setline_color_front'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Front Set line color:")
+      .appendField(new Blockly.FieldDropdown([["Black", "0"],["White", "1"]]), "line_color");
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Set Line color");
+  }
+};
 Blockly.Blocks['PID_readLine'] = {
   init: function() {
     this.appendDummyInput()
@@ -171,12 +184,27 @@ Blockly.Blocks['set_calibrate_Front_sensor'] = {
     this.setTooltip("");
   }
 };
-
+Blockly.Blocks['Read_Status_Front_Sensor'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("")
+      .appendField(new Blockly.FieldDropdown([["S0", "0"],["S1", "1"],["S2", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
+    this.appendDummyInput()
+      .appendField("is detect:")
+      .appendField(new Blockly.FieldDropdown([["Black", "0"],["Write", "1"]]), "line_color");
+    
+    this.setInputsInline(true);
+    //this.setOutput(true, "Number,boolen");
+    this.setOutput(true);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
 Blockly.Blocks['Read_Ref_Front_Sensor'] = {
   init: function() {
     this.appendDummyInput()
       .appendField("Ref Front sensor:")
-      .appendField(new Blockly.FieldDropdown([["S1", "0"],["S2", "1"],["S3", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
+      .appendField(new Blockly.FieldDropdown([["S0", "0"],["S1", "1"],["S2", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
 
     this.setInputsInline(true);
     this.setOutput(true, "Number");
@@ -236,6 +264,19 @@ Blockly.Blocks['NKP_ONE_PID_setPin_B'] = {
     this.setNextStatement(true, null);
     this.setColour(280);
     this.setTooltip("Set pin PID");
+  }
+};
+Blockly.Blocks['NKP_ONE_PID_setline_color_Black'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Black Set line color:")
+      .appendField(new Blockly.FieldDropdown([["Black", "0"],["White", "1"]]), "line_color");
+
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(280);
+    this.setTooltip("Set line color");
   }
 };
 Blockly.Blocks['PID_readLine_B'] = {
@@ -335,6 +376,45 @@ Blockly.Blocks['NKP_ONE_Run_PID_B'] = {
     this.setNextStatement(true, null);
     this.setColour(280);
     this.setTooltip("Rotate ro spin right a robot.");
+  }
+};
+
+Blockly.Blocks['Read_Status_Black_Sensor'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("")
+      .appendField(new Blockly.FieldDropdown([["S0", "0"],["S1", "1"],["S2", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
+    this.appendDummyInput()
+      .appendField("is detect:")
+      .appendField(new Blockly.FieldDropdown([["Black", "0"],["Write", "1"]]), "line_color");
+    
+    this.setInputsInline(true);
+    this.setOutput(true);
+    this.setColour(280);
+    this.setTooltip("");
+  }
+};
+
+Blockly.Blocks['EditTextCode'] = {
+  init: function() {
+    this.appendValueInput("Text")
+      .appendField("custom code:");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(180);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['BlockComment'] = {
+  init: function() {
+    this.appendValueInput("Text")
+      .appendField("Comment:");
+    this.setInputsInline(false);
+    this.setPreviousStatement(false, null);
+    this.setNextStatement(false, null);
+    this.setColour(180);
+    this.setTooltip("");
   }
 };
 }

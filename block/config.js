@@ -213,6 +213,7 @@ module.exports = {
                 'button_1_status',
                 'Knob_status',
                 'TCSensor_status',
+                'Ultrasonic_Sensor',
                 'NKP_beep',
                 'Compass_getData',
                 'Compass_Read',
@@ -568,6 +569,7 @@ module.exports = {
                 xml: `<sep gap="25"></sep><label text="3.ตั้งค่า Max = ค่าที่อ่านจากพื้นสีขาว" web-class="headline"></label>`
               },
                 {xml:`<block type="NKP_ONE_PID_setPin"></block>`},
+                'NKP_ONE_PID_setline_color_front',
 	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin">
@@ -692,8 +694,10 @@ module.exports = {
                             
                         </block>`
               },
+              'Read_Status_Front_Sensor',
               "Read_Ref_Front_Sensor",
 	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
+              'NKP_ONE_PID_setline_color_Black',
 	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin_B">
@@ -787,6 +791,7 @@ module.exports = {
 	                    </block>`
 	          },
               "PID_readLine_B",
+              'Read_Status_Black_Sensor',
 	          {
 	              xml:
 	                  `<block type="NKP_ONE_Run_PID_B">
@@ -807,6 +812,9 @@ module.exports = {
 	                        </value>
 	                    </block>`
 	          },
+              
+              
+
 
         
                 
@@ -974,6 +982,31 @@ module.exports = {
                     icon : '/static/icons/icons8_module_96px.png',
                     custom : 'PROCEDURE'
                 },
+                {
+                    type : 'category',
+                    name : 'Custom',
+                    icon : '/static/icons/icons8_bluetooth_2_96px.png',
+                    blocks : [
+                        { xml : 
+                            `<block type="EditTextCode">
+                                <value name="Text">
+                                    <shadow type="basic_string">
+                                        <field name="VALUE">int Prince = 1;</field>
+                                    </shadow>
+                                </value>                                    
+                            </block>`
+                        },
+                        { xml : 
+                            `<block type="BlockComment">
+                                <value name="Text">
+                                    <shadow type="basic_string">
+                                        <field name="VALUE">comment here </field>
+                                    </shadow>
+                                </value>                                    
+                            </block>`
+                        },
+                    ]
+                },
                 /*{
                     type : 'category',
                     name : 'Tasks',
@@ -1008,7 +1041,8 @@ module.exports = {
                     name : 'Text',
                     icon : '/static/icons/icons8_text_color_96px.png',
                     blocks : [
-                        'basic_string',                        
+                        'basic_string',
+                                          
                         { xml : 
                             `<block type="text_length">
                                 <value name="VALUE">
@@ -1018,7 +1052,9 @@ module.exports = {
                                 </value>                                    
                             </block>`
                         },
-                        'text_join',                        
+                        'text_join',
+                          
+
                         { xml : 
                             `<block type="text_append">
                                 <value name="TEXT">

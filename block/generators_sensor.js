@@ -2,7 +2,7 @@ module.exports = function(Blockly){
   'use strict';
 
 Blockly.JavaScript['button_1_status'] = function(block) {  
-  var code = '(digitalRead(15) == 0)';  
+  var code = '(digitalRead(15))';  
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
@@ -33,6 +33,12 @@ Blockly.JavaScript['Read_position_TCSensor'] = function(block) {
 Blockly.JavaScript['TCSensor_status'] = function(block) {
   var dropdown_pin = block.getFieldValue('pin');
   var code = `(analog(${dropdown_pin}))`;
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+Blockly.JavaScript['Ultrasonic_Sensor'] = function(block) {
+  var dropdown_pin_Trig = block.getFieldValue('pin_Trig');
+  var dropdown_pin_Echo = block.getFieldValue('pin_Echo');
+  var code = `(readDistance(${dropdown_pin_Trig},${dropdown_pin_Echo}))`;
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 Blockly.JavaScript['TCS_color_status'] = function(block) {

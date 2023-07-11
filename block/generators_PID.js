@@ -33,6 +33,16 @@ Blockly.JavaScript['NKP_ONE_PID_setPin'] = function(block) {
   code += 'PID_set_Pin('+value_s0+','+value_s1+','+value_s2+','+value_s3+','+value_s4+','+value_s5+','+value_s6+','+value_s7+');\n';
   return code;
 };
+
+Blockly.JavaScript['NKP_ONE_PID_setline_color_front'] = function(block) {
+ 
+  var value_line_color = block.getFieldValue('line_color');
+  
+  var code = '';
+  code += 'Front_color = ' + value_line_color+';';
+  return code;
+};
+
 Blockly.JavaScript['PID_readLine'] = function(block) {
     //var value_pin = block.getFieldValue('pin');
     //var code = `readline(${value_pin})`;  
@@ -93,6 +103,23 @@ Blockly.JavaScript['Read_Ref_Front_Sensor'] = function(block) {
   return [code, Blockly.JavaScript.ORDER_ATOMIC];
 };
 
+Blockly.JavaScript['Read_Status_Front_Sensor'] = function(block) {
+ 
+  var value_Sensor_Pin = block.getFieldValue('Sensor_Pin');
+  var value_line_color = block.getFieldValue('line_color');
+  
+  var code = '';
+  if(value_line_color == '0'){
+    code += 'Read_status_sensor(' + value_Sensor_Pin+')';
+  }
+  else{
+    code += '!Read_status_sensor(' + value_Sensor_Pin+')';
+  }
+  
+  return [code, Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
 
 
 
@@ -124,6 +151,14 @@ Blockly.JavaScript['NKP_ONE_PID_setPin_B'] = function(block) {
   var code = '';
   code += 'PID_NumPin_B = ' + value_numSensor+';\t';
   code += 'PID_set_Pin_B('+value_s0+','+value_s1+','+value_s2+','+value_s3+','+value_s4+','+value_s5+','+value_s6+','+value_s7+');\n';
+  return code;
+};
+Blockly.JavaScript['NKP_ONE_PID_setline_color_Black'] = function(block) {
+ 
+  var value_line_color = block.getFieldValue('line_color');
+  
+  var code = '';
+  code += 'Black_color = ' + value_line_color+';';
   return code;
 };
 Blockly.JavaScript['PID_readLine_B'] = function(block) {
@@ -171,5 +206,24 @@ Blockly.JavaScript['NKP_ONE_Run_PID_B'] = function(block) {
   code += 'Run_PID_B('+ value_speed+','+value_KP+','+value_KD+');\n';
   return code;
 };
+
+Blockly.JavaScript['EditTextCode'] = function(block) {
+  //var value_text = Blockly.JavaScript.valueToCode(block, 'Text', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_text = Blockly.JavaScript.valueToCode(block, 'Text', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = '';
+  code += ''+value_text+'\n';
+  code = code.substring(8,code.length - 3);
+  return code;
+};
+
+Blockly.JavaScript['BlockComment'] = function(block) {
+  //var value_text = Blockly.JavaScript.valueToCode(block, 'Text', Blockly.JavaScript.ORDER_ATOMIC);
+  var value_text = Blockly.JavaScript.valueToCode(block, 'Text', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = '';
+  return code;
+};
+
+
+
 
 }
