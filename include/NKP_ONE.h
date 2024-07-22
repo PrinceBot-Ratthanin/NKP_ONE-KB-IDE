@@ -48,7 +48,7 @@ uint32_t _lastPosition;
 bool first_state_for_calribrate = 0;
 
 int PID_NumPin_B = 3;
-int Black_color = 0;
+int Back_color = 0;
 int PID_SetupPin_B[] = {0,0,0,0,0,0,0,0};
 int PID_Min_B[] = {10,10,10,10,10,10,10,10};
 int PID_Max_B[] = {4000,4000,4000,4000,4000,4000,4000,4000};
@@ -59,6 +59,10 @@ float derivative_B = 0;
 float previous_error_B = 0;
 uint16_t state_on_Line_B = 0;
 uint32_t _lastPosition_B;
+bool first_state_for_calribrate_B = 0;
+
+int _Sensitive_F = 80;
+int _Sensitive_B = 80;
 
 
 int state_IMU = 0;
@@ -242,6 +246,10 @@ float Read_Color_TCS(int color_of_sensor){
 void set_Front_color(){
 
 }
+void setSensitive_F(int _SensorSensitive)
+{
+    _Sensitive_F = _SensorSensitive;
+}
 void PID_set_Min(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
   PID_Min[0] = S0;PID_Min[1] = S1;PID_Min[2] = S2;PID_Min[3] = S3;
   PID_Min[4] = S4;PID_Min[5] = S5;PID_Min[6] = S6;PID_Min[7] = S7;
@@ -286,7 +294,6 @@ void setCalibrate(int round){
     delay(1);
   }
   display.clear();
-    
 }
 int ReadSensorMinValue(uint8_t _Pin){
     return PID_Min[_Pin];
@@ -311,7 +318,7 @@ int readline()
   	}
     
     value = constrain(value,0,100);      
-    if (value > 20) { 
+    if (value > 100 - _Sensitive_F) { 
       onLine = true;
     }
     if (value > 5){
@@ -348,6 +355,11 @@ void Run_PID(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD){
   previous_error = errors;
 }
 
+
+void setSensitive_B(int _SensorSensitive)
+{
+    _Sensitive_B = _SensorSensitive;
+}
 void PID_set_Min_B(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
   PID_Min_B[0] = S0;PID_Min_B[1] = S1;PID_Min_B[2] = S2;PID_Min_B[3] = S3;
   PID_Min_B[4] = S4;PID_Min_B[5] = S5;PID_Min_B[6] = S6;PID_Min_B[7] = S7;
@@ -360,6 +372,39 @@ void PID_set_Pin_B(int S0,int S1,int S2,int S3,int S4,int S5,int S6,int S7){
   PID_SetupPin_B[0] = S0;PID_SetupPin_B[1] = S1;PID_SetupPin_B[2] = S2;PID_SetupPin_B[3] = S3;
   PID_SetupPin_B[4] = S4;PID_SetupPin_B[5] = S5;PID_SetupPin_B[6] = S6;PID_SetupPin_B[7] = S7;
 }
+void setCalibrate_B(int round){
+  display.clear();
+  display.setFont(ArialMT_Plain_24);
+  display.drawString(0,0,"Back Sensor");
+  display.drawString(0,25,"  Calribrate  ");
+  display.display();
+  if(first_state_for_calribrate_B == 0){
+    for (uint8_t i = 0; i < PID_NumPin_B; i++)
+    {
+      PID_Max_B[i] = 0;
+      PID_Min_B[i] = 4095;
+    }
+    first_state_for_calribrate_B = 1;
+  }
+  for(int roundOfCalribtate = 0; roundOfCalribtate < round ;roundOfCalribtate++ ){
+    for (uint8_t i = 0; i < PID_NumPin_B; i++)
+    {
+      if(analog(PID_SetupPin_B[i]) > PID_Max_B[i] || PID_Max_B[i] >= 4095 ){
+        PID_Max_B[i]  = analog(PID_SetupPin_B[i]);
+        if(PID_Max_B[i] > 4095 )PID_Max_B[i] = 4095;
+      }
+    }
+    for (uint8_t i = 0; i < PID_NumPin_B; i++)
+    {
+      if(analog(PID_SetupPin_B[i]) < PID_Min_B[i] || PID_Min_B[i] == 0){
+        PID_Min_B[i] = analog(PID_SetupPin_B[i]);
+        if(PID_Min_B[i] < 0) PID_Min_B[i] = 0;
+      }
+    }
+    delay(1);
+  }
+  display.clear();
+}
 int readline_B()   
 {                
   bool onLine_B = false;
@@ -368,14 +413,14 @@ int readline_B()
   for (uint8_t i = 0; i < PID_NumPin_B ; i++) 
   {
   	long value_B;
-  	if(Black_color == 0){
+  	if(Back_color == 0){
   		value_B = map(analog(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 100, 0);
   	}
     else {
     	value_B = map(analog(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 0, 100);
     }
     value_B = constrain(value_B,0,100); 
-    if (value_B > 20) { 
+    if (value_B > 100 - _Sensitive_B) { 
       onLine_B = true;
     }
     if (value_B > 5){
@@ -428,4 +473,31 @@ bool Read_status_sensor(int pin_sensor){
 }
 bool Read_status_sensor_B(int pin_sensor){
 	return analog(PID_SetupPin_B[pin_sensor]) < ((PID_Max_B[pin_sensor] + PID_Min_B[pin_sensor]) / 2) ? true : false;
+}
+
+int Read_sumValue_sensor(){
+  int value = 0;
+  for(int i = 0;i<PID_NumPin;i++){
+    if(Front_color == 0){
+        value += map(analog(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 100, 0);
+      }
+      else {
+        value += map(analog(PID_SetupPin[i]), PID_Min[i], PID_Max[i], 0, 100);
+      } 
+  }
+   
+    return value;
+}
+int Read_sumValue_sensor_B(){
+  int value = 0;
+  for(int i = 0;i<PID_NumPin_B;i++){
+    if(Back_color == 0){
+        value += map(analog(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 100, 0);
+      }
+      else {
+        value += map(analog(PID_SetupPin_B[i]), PID_Min_B[i], PID_Max_B[i], 0, 100);
+      } 
+  }
+   
+    return value;
 }
