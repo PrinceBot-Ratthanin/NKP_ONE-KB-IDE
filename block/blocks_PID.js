@@ -184,6 +184,20 @@ Blockly.Blocks['set_calibrate_Front_sensor'] = {
     this.setTooltip("");
   }
 };
+Blockly.Blocks['set_Sensitive_Front_sensor'] = {
+  init: function() {
+    this.appendValueInput("Sensitive")
+      .setCheck("Number")
+      .appendField("set Sensitive Front sensor");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
 Blockly.Blocks['Read_Status_Front_Sensor'] = {
   init: function() {
     this.appendDummyInput()
@@ -266,10 +280,10 @@ Blockly.Blocks['NKP_ONE_PID_setPin_B'] = {
     this.setTooltip("Set pin PID");
   }
 };
-Blockly.Blocks['NKP_ONE_PID_setline_color_Black'] = {
+Blockly.Blocks['NKP_ONE_PID_setline_color_Back'] = {
   init: function() {
     this.appendDummyInput()
-      .appendField("Black Set line color:")
+      .appendField("Back Set line color:")
       .appendField(new Blockly.FieldDropdown([["Black", "0"],["White", "1"]]), "line_color");
 
     this.setInputsInline(true);
@@ -378,8 +392,36 @@ Blockly.Blocks['NKP_ONE_Run_PID_B'] = {
     this.setTooltip("Rotate ro spin right a robot.");
   }
 };
+Blockly.Blocks['set_calibrate_Back_sensor'] = {
+  init: function() {
+    this.appendValueInput("Round")
+      .setCheck("Number")
+      .appendField("Calibrate Back Sensor");
+    this.appendDummyInput()
+      .appendField("round");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(280);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['set_Sensitive_Back_sensor'] = {
+  init: function() {
+    this.appendValueInput("Sensitive")
+      .setCheck("Number")
+      .appendField("set Sensitive Back sensor");
+    this.appendDummyInput()
+      .appendField("%");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(280);
+    this.setTooltip("");
+  }
+};
 
-Blockly.Blocks['Read_Status_Black_Sensor'] = {
+Blockly.Blocks['Read_Status_Back_Sensor'] = {
   init: function() {
     this.appendDummyInput()
       .appendField("")
@@ -392,6 +434,30 @@ Blockly.Blocks['Read_Status_Black_Sensor'] = {
     this.setOutput(true);
     this.setColour(280);
     this.setTooltip("");
+  }
+};
+
+Blockly.Blocks['Back_readSum'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Back_readSum");
+    this.setInputsInline(true);
+    this.setOutput(true);
+    this.setColour(280);
+ this.setTooltip("Back_readSum");
+ this.setHelpUrl("");
+  }
+};
+
+Blockly.Blocks['Front_readSum'] = {
+  init: function() {
+    this.appendDummyInput()
+        .appendField("Front_readSum");
+    this.setInputsInline(true);
+    this.setOutput(true);
+    this.setColour(330);
+ this.setTooltip("Front_readSum");
+ this.setHelpUrl("");
   }
 };
 

@@ -542,6 +542,46 @@ module.exports = {
                         </value>
                     </block>`
                 },
+                {
+                    xml : 
+                    `<block type="NKP_Servo_motor_Moving">
+                        <value name="present_angle">
+                            <shadow type="math_number">
+                                <field name="NUM">90</field>
+                            </shadow>
+                        </value>
+                        <value name="traget_angle">
+                            <shadow type="math_number">
+                                <field name="NUM">120</field>
+                            </shadow>
+                        </value>
+                        <value name="speed_servo">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
+                {
+                    xml : 
+                    `<block type="NKP_Servo_run">
+                        <value name="traget_angle">
+                            <shadow type="math_number">
+                                <field name="NUM">120</field>
+                            </shadow>
+                        </value>
+                        <value name="speed_servo">
+                            <shadow type="math_number">
+                                <field name="NUM">50</field>
+                            </shadow>
+                        </value>
+                        <value name="servo_dif">
+                            <shadow type="math_number">
+                                <field name="NUM">2</field>
+                            </shadow>
+                        </value>
+                    </block>`
+                },
                 
 
         
@@ -621,42 +661,42 @@ module.exports = {
 	                  `<block type="NKP_ONE_PID_setMax">
 	                        <value name="S0">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S1">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S2">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S3">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S4">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S5">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S6">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S7">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        
@@ -694,10 +734,23 @@ module.exports = {
                             
                         </block>`
               },
+              {xml:
+                      `<block type="set_Sensitive_Front_sensor">
+                            <value name="Sensitive">
+                                <shadow type="math_number">
+                                    <field name="NUM">80</field>
+                                </shadow>
+                            </value>
+                            
+                        </block>`
+              },
               'Read_Status_Front_Sensor',
               "Read_Ref_Front_Sensor",
+              "Front_readSum",
+
+
 	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
-              'NKP_ONE_PID_setline_color_Black',
+              'NKP_ONE_PID_setline_color_Back',
 	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin_B">
@@ -749,49 +802,49 @@ module.exports = {
 	                  `<block type="NKP_ONE_PID_setMax_B">
 	                        <value name="S0">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S1">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S2">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S3">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S4">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S5">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S6">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="S7">
 	                            <shadow type="math_number">
-	                                <field name="NUM">4000</field>
+	                                <field name="NUM">4095</field>
 	                            </shadow>
 	                        </value>
 	                        
 	                    </block>`
 	          },
               "PID_readLine_B",
-              'Read_Status_Black_Sensor',
+              'Read_Status_Back_Sensor',
 	          {
 	              xml:
 	                  `<block type="NKP_ONE_Run_PID_B">
@@ -812,6 +865,28 @@ module.exports = {
 	                        </value>
 	                    </block>`
 	          },
+              {xml:
+                      `<block type="set_calibrate_Back_sensor">
+                            <value name="Round">
+                                <shadow type="math_number">
+                                    <field name="NUM">100</field>
+                                </shadow>
+                            </value>
+                            
+                        </block>`
+              },
+              {xml:
+                      `<block type="set_Sensitive_Back_sensor">
+                            <value name="Sensitive">
+                                <shadow type="math_number">
+                                    <field name="NUM">80</field>
+                                </shadow>
+
+                            </value>
+                            
+                        </block>`
+              },
+              "Back_readSum",
               
               
 

@@ -39,7 +39,7 @@ module.exports = function(Blockly){
   Blockly.Blocks['encoderA_status'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Read EncoderA (26)");
+          .appendField("Read EncoderA");
       this.setInputsInline(true);
       this.setOutput(true, "Number");
       this.setColour(90);
@@ -50,7 +50,7 @@ module.exports = function(Blockly){
   Blockly.Blocks['encoderB_status'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Read EncoderB (27)");
+          .appendField("Read EncoderB");
       this.setInputsInline(true);
       this.setOutput(true, "Number");
       this.setColour(90);

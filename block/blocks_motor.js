@@ -204,4 +204,51 @@ Blockly.Blocks['NKP_motor_stop_ch'] = {
     this.setTooltip("");
   }
 };
+Blockly.Blocks['NKP_Servo_motor_Moving'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Set servo:")
+      .appendField(new Blockly.FieldDropdown([ ["1","1"], ["2","2"], ["3","3"],["4","4"]]), "port");
+    this.appendValueInput("present_angle")
+      .setCheck("Number")
+      .appendField("from angle");
+    this.appendValueInput("traget_angle")
+      .setCheck("Number")
+      .appendField("To");
+    this.appendValueInput("speed_servo")
+      .setCheck("Number")
+      .appendField("speed:");
+    this.appendDummyInput()
+      .appendField("ms");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+Blockly.Blocks['NKP_Servo_run'] = {
+  init: function() {
+    this.appendDummyInput()
+      .appendField("Set")
+      .appendField(new Blockly.FieldDropdown([ ["1","1"], ["2","2"], ["3","3"],["4","4"]]), "port");
+    this.appendValueInput("traget_angle")
+      .setCheck("Number")
+      .appendField("Servo move by step to:");
+    this.appendValueInput("speed_servo")
+      .setCheck("Number")
+      .appendField("speed:");
+    this.appendValueInput("servo_dif")
+      .setCheck("Number")
+      .appendField("% dif:");
+    this.setInputsInline(true);
+    this.setOutput(true, "Number");
+    this.setColour(330);
+    this.setTooltip("");
+  }
+};
+
+
+
+
 }
