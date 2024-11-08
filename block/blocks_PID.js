@@ -170,6 +170,28 @@ Blockly.Blocks['NKP_ONE_Run_PID'] = {
   }
 };
 
+Blockly.Blocks['NKP_ONE_Run_PID_readSum'] = {
+  init: function() {
+    this.appendValueInput("speed")
+      .setCheck("Number")
+      .appendField("Front_Run_PD_Speed:");
+    this.appendValueInput("KP")
+      .setCheck("Number")
+      .appendField("KP:");
+    this.appendValueInput("KD")
+      .setCheck("Number")
+      .appendField("KD:");
+    this.appendValueInput("readSum")
+      .setCheck("Number")
+      .appendField("Until readSum > :");
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(330);
+    this.setTooltip("Rotate ro spin right a robot.");
+  }
+};
+
 Blockly.Blocks['set_calibrate_Front_sensor'] = {
   init: function() {
     this.appendValueInput("Round")
@@ -205,7 +227,7 @@ Blockly.Blocks['Read_Status_Front_Sensor'] = {
       .appendField(new Blockly.FieldDropdown([["S0", "0"],["S1", "1"],["S2", "2"],["S3", "3"],["S4", "4"],["S5", "5"],["S6", "6"],["S7", "7"],["S8", "8"],["S9", "9"]]), "Sensor_Pin");
     this.appendDummyInput()
       .appendField("is detect:")
-      .appendField(new Blockly.FieldDropdown([["Black", "0"],["Write", "1"]]), "line_color");
+      .appendField(new Blockly.FieldDropdown([["Black", "0"],["White", "1"]]), "line_color");
     
     this.setInputsInline(true);
     //this.setOutput(true, "Number,boolen");

@@ -7,48 +7,6 @@ module.exports = {
             color : '230',
             icon : '/static/icons/icons8_picture_96px_1.png',
             blocks : [
-                /*{
-                    xml : `<block type="variables_set">
-                                <field name="VAR">img1</field>
-                                <value name="VALUE">
-                                    <block type="i2c128x64_create_image" inline="false"></block>
-                                </value>
-                            </block>`
-                },{
-                    xml : 
-                    `<block type="i2c128x64_display_image">
-                        <value name="img">
-                            <block type="variables_get">
-                                <field name="VAR">img1</field>
-                            </block>
-                        </value>
-                        <value name="x">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="x">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="y">
-                            <shadow type="math_number">
-                                <field name="NUM">0</field>
-                            </shadow>
-                        </value>
-                        <value name="width">
-                            <shadow type="math_number">
-                                <field name="NUM">10</field>
-                            </shadow>
-                        </value>
-                        <value name="height">
-                            <shadow type="math_number">
-                                <field name="NUM">10</field>
-                            </shadow>
-                        </value>
-                    </block>`
-                },*/
                 'i2c128x64_display_clear',
                 'i2c128x64_display_display',
                 { 
@@ -610,6 +568,16 @@ module.exports = {
               },
                 {xml:`<block type="NKP_ONE_PID_setPin"></block>`},
                 'NKP_ONE_PID_setline_color_front',
+                {xml:
+                      `<block type="set_calibrate_Front_sensor">
+                            <value name="Round">
+                                <shadow type="math_number">
+                                    <field name="NUM">100</field>
+                                </shadow>
+                            </value>
+                            
+                        </block>`
+              },
 	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin">
@@ -712,7 +680,7 @@ module.exports = {
 	                        </value>
 	                        <value name="KP">
 	                            <shadow type="math_number">
-	                                <field name="NUM">1</field>
+	                                <field name="NUM">0.2</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="KD">
@@ -722,10 +690,53 @@ module.exports = {
 	                        </value>
 	                    </block>`
 	          },
+              {
+                  xml:
+                      `<block type="NKP_ONE_Run_PID_readSum">
+                            <value name="speed">
+                                <shadow type="math_number">
+                                    <field name="NUM">50</field>
+                                </shadow>
+                            </value>
+                            <value name="KP">
+                                <shadow type="math_number">
+                                    <field name="NUM">0.2</field>
+                                </shadow>
+                            </value>
+                            <value name="KD">
+                                <shadow type="math_number">
+                                    <field name="NUM">0</field>
+                                </shadow>
+                            </value>
+                            <value name="readSum">
+                                <shadow type="math_number">
+                                    <field name="NUM">300</field>
+                                </shadow>
+                            </value>
+                        </block>`
+              },
               "PID_readLine",
               // {xml:`<block type="Read_Min_Front_Sensor"></block>`},
-               {xml:
-                      `<block type="set_calibrate_Front_sensor">
+               
+              // {xml:
+              //         `<block type="set_Sensitive_Front_sensor">
+              //               <value name="Sensitive">
+              //                   <shadow type="math_number">
+              //                       <field name="NUM">80</field>
+              //                   </shadow>
+              //               </value>
+                            
+              //           </block>`
+              // },
+              'Read_Status_Front_Sensor',
+              "Read_Ref_Front_Sensor",
+              "Front_readSum",
+
+
+	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
+              'NKP_ONE_PID_setline_color_Back',
+	          {xml:
+                      `<block type="set_calibrate_Back_sensor">
                             <value name="Round">
                                 <shadow type="math_number">
                                     <field name="NUM">100</field>
@@ -734,24 +745,6 @@ module.exports = {
                             
                         </block>`
               },
-              {xml:
-                      `<block type="set_Sensitive_Front_sensor">
-                            <value name="Sensitive">
-                                <shadow type="math_number">
-                                    <field name="NUM">80</field>
-                                </shadow>
-                            </value>
-                            
-                        </block>`
-              },
-              'Read_Status_Front_Sensor',
-              "Read_Ref_Front_Sensor",
-              "Front_readSum",
-
-
-	          {xml:`<block type="NKP_ONE_PID_setPin_B"></block>`},
-              'NKP_ONE_PID_setline_color_Back',
-	          
 	          {xml:
 	                  `<block type="NKP_ONE_PID_setMin_B">
 	                        <value name="S0">
@@ -855,7 +848,7 @@ module.exports = {
 	                        </value>
 	                        <value name="KP">
 	                            <shadow type="math_number">
-	                                <field name="NUM">1</field>
+	                                <field name="NUM">0.2</field>
 	                            </shadow>
 	                        </value>
 	                        <value name="KD">
@@ -875,17 +868,17 @@ module.exports = {
                             
                         </block>`
               },
-              {xml:
-                      `<block type="set_Sensitive_Back_sensor">
-                            <value name="Sensitive">
-                                <shadow type="math_number">
-                                    <field name="NUM">80</field>
-                                </shadow>
+              // {xml:
+              //         `<block type="set_Sensitive_Back_sensor">
+              //               <value name="Sensitive">
+              //                   <shadow type="math_number">
+              //                       <field name="NUM">80</field>
+              //                   </shadow>
 
-                            </value>
+              //               </value>
                             
-                        </block>`
-              },
+              //           </block>`
+              // },
               "Back_readSum",
               
               

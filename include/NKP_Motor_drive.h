@@ -79,6 +79,7 @@ void ao(){
   delay(1);
   motor(1,0);
   motor(2,0);
+  delay(10);
 }
 void aot(int _timer){
   motor(1,1,0);

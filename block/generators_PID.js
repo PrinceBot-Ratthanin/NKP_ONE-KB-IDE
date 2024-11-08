@@ -88,6 +88,16 @@ Blockly.JavaScript['NKP_ONE_Run_PID'] = function(block) {
   code += 'Run_PID('+ value_speed+','+value_KP+','+value_KD+');\n';
   return code;
 };
+Blockly.JavaScript['NKP_ONE_Run_PID_readSum'] = function(block) {
+  var value_speed = Blockly.JavaScript.valueToCode(block, 'speed', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var value_KP = Blockly.JavaScript.valueToCode(block, 'KP', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var value_KD = Blockly.JavaScript.valueToCode(block, 'KD', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var value_readSum = Blockly.JavaScript.valueToCode(block, 'readSum', Blockly.JavaScript.ORDER_ATOMIC) || '0';
+  var code = '';
+  code += 'Run_PID_readSum('+ value_speed+','+value_KP+','+value_KD+','+value_readSum+');\n';
+  return code;
+};
+
 Blockly.JavaScript['set_calibrate_Front_sensor'] = function(block) {
   var value_Round = Blockly.JavaScript.valueToCode(block, 'Round', Blockly.JavaScript.ORDER_ATOMIC) || '0';
   var code = '';

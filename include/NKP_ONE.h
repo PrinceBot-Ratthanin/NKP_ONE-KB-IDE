@@ -194,7 +194,7 @@ void wait(){
   display.drawString(25,0,"NKP_ONE");
   display.drawString(24,20,"Welcome");
   display.display();
-  delay(700);
+  delay(300);
   display.setFont(ArialMT_Plain_10);
   while(digitalRead(15) == 1){
   		/*if(voltage_sensor() >1.00 && voltage_sensor() < 5.00){
@@ -223,6 +223,7 @@ void wait(){
   beep();
   display.clear();
   display.display();
+  delay(500);
 }
 float Read_Color_TCS(int color_of_sensor){
   uint16_t clearcol_lib, red_lib, green_lib, blue_lib;
@@ -501,3 +502,25 @@ int Read_sumValue_sensor_B(){
    
     return value;
 }
+void Run_PID_readSum(int RUN_PID_speed,float RUN_PID_KP,float RUN_PID_KD,int readSum){
+	do{
+
+
+  
+  int present_position = readline();
+  int setpoint = ((PID_NumPin - 1) * 100) / 2;
+  errors = present_position - setpoint;
+  integral = integral + errors ;
+  derivative = (errors - previous_error) ;
+  output = RUN_PID_KP * errors  + RUN_PID_KD * derivative;
+    
+  int m1Speed = RUN_PID_speed + output ;
+  int m2Speed = RUN_PID_speed - output;
+  motor(1,m1Speed);
+  motor(2,m2Speed);
+  delay(1);
+  previous_error = errors;
+  }
+  while(Read_sumValue_sensor() < readSum);
+}
+
