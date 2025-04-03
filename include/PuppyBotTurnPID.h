@@ -29,24 +29,99 @@ float shortestAngle(float currentAngle, float targetAngle) {
     return error;
 }
 
-void turnPID(float targetYaw_turnPID,int speedTurn_min,int speedTurn_max,float kp_turnPID,float kd_turnPID) {
+// void turnPID(float targetYaw_turnPID,int speedTurn_min,int speedTurn_max,float kp_turnPID,float kd_turnPID) {
+//   unsigned long startTime = millis();
+//   integral_turn = 0;
+//   int stableCount = 0;
+//   int overshootCount = 0;
+//   bool hasOvershoot = false;
+//  // float preverror_turnPID = targetYaw_turnPID - getContinuousYaw();
+//   float preverror_turnPID = shortestAngle(getContinuousYaw(), targetYaw_turnPID);
+
+//   while (true) {
+//     updateContinuousYaw();
+//     int current_Yaw = getContinuousYaw();
+//     float error_turnPID = targetYaw_turnPID - current_Yaw;
+
+//     if ((preverror_turnPID > 0 && error_turnPID < 0) || (preverror_turnPID < 0 && error_turnPID > 0)) {
+//       hasOvershoot = true;
+//       overshootCount++;
+//     }
+//     unsigned long now = millis();
+//     float deltaTime = max((now - startTime) / 1000.0, 0.001);
+//     startTime = now;
+
+//     integral_turn += error_turnPID * deltaTime;
+//     integral_turn = constrain(integral_turn, -50, 50);
+//     float derivative = (error_turnPID - preverror_turnPID) / deltaTime;
+//     float output = kp_turnPID * error_turnPID + kd_turnPID * derivative;
+
+//     int speed = constrain(abs(output), speedTurn_min, speedTurn_max);
+//     // Serial.print("  current_Yaw  ");Serial.print(getYaw());
+//     // Serial.print("  Yaw_con  ");Serial.print(current_Yaw);
+//     // Serial.print("  error_turnPID  ");Serial.print(error_turnPID);
+//     // Serial.print("  targetYaw_turnPID  ");Serial.print(targetYaw_turnPID);
+//     // Serial.print("  output  ");Serial.print(output);
+//     // Serial.print("  speed  ");Serial.println(speed);
+    
+    
+//       if (output < 0) {
+//         motor(1, -speed);
+//         motor(2, speed);
+//         motor(3, -speed);
+//         motor(4, speed);
+//       } else {
+//         motor(1, speed);
+//         motor(2, -speed);
+//         motor(3, speed);
+//         motor(4, -speed);
+//       }
+
+//     if(overshootCount > 10){
+//       ao();
+//       delay(10);
+//       ao();
+//     }
+//     if (abs(error_turnPID) < error_for_turnPID && hasOvershoot && overshootCount >= 2) {
+//       stableCount++;
+//       if (stableCount > 5) {
+//         ao();
+//         delay(10);
+//         ao();
+//         break;
+//       }
+//     } else {
+//       stableCount = 0;
+//     }
+//     if (millis() - startTime > 5000) {
+//       Serial.println("Timeout! Exiting loop...");
+//       ao();
+//       break;
+//     }
+//     preverror_turnPID = error_turnPID;
+//   }
+// }
+void turnPID(float targetYaw_turnPID, int speedTurn_min, int speedTurn_max, float kp_turnPID, float kd_turnPID) {
   unsigned long startTime = millis();
   integral_turn = 0;
   int stableCount = 0;
   int overshootCount = 0;
   bool hasOvershoot = false;
- // float preverror_turnPID = targetYaw_turnPID - getContinuousYaw();
+  
   float preverror_turnPID = shortestAngle(getContinuousYaw(), targetYaw_turnPID);
 
   while (true) {
     updateContinuousYaw();
-    int current_Yaw = getContinuousYaw();
-    float error_turnPID = targetYaw_turnPID - current_Yaw;
+    float current_Yaw = getContinuousYaw();
+
+    // เรียกใช้ shortestAngle อย่างถูกต้องเพื่อจัดการ wrap-around
+    float error_turnPID = shortestAngle(current_Yaw, targetYaw_turnPID);
 
     if ((preverror_turnPID > 0 && error_turnPID < 0) || (preverror_turnPID < 0 && error_turnPID > 0)) {
       hasOvershoot = true;
       overshootCount++;
     }
+
     unsigned long now = millis();
     float deltaTime = max((now - startTime) / 1000.0, 0.001);
     startTime = now;
@@ -57,32 +132,27 @@ void turnPID(float targetYaw_turnPID,int speedTurn_min,int speedTurn_max,float k
     float output = kp_turnPID * error_turnPID + kd_turnPID * derivative;
 
     int speed = constrain(abs(output), speedTurn_min, speedTurn_max);
-    // Serial.print("  current_Yaw  ");Serial.print(getYaw());
-    // Serial.print("  Yaw_con  ");Serial.print(current_Yaw);
-    // Serial.print("  error_turnPID  ");Serial.print(error_turnPID);
-    // Serial.print("  targetYaw_turnPID  ");Serial.print(targetYaw_turnPID);
-    // Serial.print("  output  ");Serial.print(output);
-    // Serial.print("  speed  ");Serial.println(speed);
-    
-    
-      if (output < 0) {
-        motor(1, -speed);
-        motor(2, speed);
-        motor(3, -speed);
-        motor(4, speed);
-      } else {
-        motor(1, speed);
-        motor(2, -speed);
-        motor(3, speed);
-        motor(4, -speed);
-      }
 
-    if(overshootCount > 10){
+    if (output < 0) {
+      motor(1, -speed);
+      motor(2, speed);
+      motor(3, -speed);
+      motor(4, speed);
+    } else {
+      motor(1, speed);
+      motor(2, -speed);
+      motor(3, speed);
+      motor(4, -speed);
+    }
+
+    if (overshootCount > 10) {
       ao();
       delay(10);
       ao();
+      break;
     }
-    if (abs(error_turnPID) < error_for_turnPID && hasOvershoot && overshootCount >= 2) {
+
+    if (abs(error_turnPID) < error_for_turnPID && hasOvershoot && overshootCount >= 1) {
       stableCount++;
       if (stableCount > 5) {
         ao();
@@ -93,14 +163,17 @@ void turnPID(float targetYaw_turnPID,int speedTurn_min,int speedTurn_max,float k
     } else {
       stableCount = 0;
     }
+
     if (millis() - startTime > 5000) {
       Serial.println("Timeout! Exiting loop...");
       ao();
       break;
     }
+
     preverror_turnPID = error_turnPID;
   }
 }
+
 
 void turn_45() {
   float targetYaw_turnPID = getOffsetYaw() - 135;
@@ -150,21 +223,32 @@ void turn_360() {
   turnPID(targetYaw_turnPID,speedMin_turnDirection,speedMax_turnDirection,turnDirection_PID_KP,turnDirection_PID_KD);
   resetContinuousYaw();
 }
-
-
 void turnByAngle(int turnAngle) {
-  
   updateContinuousYaw();
-  float currentYaw = getContinuousYaw();  // จดจำตำแหน่งปัจจุบันก่อนหมุน
-  float targetYaw = currentYaw + turnAngle;  // กำหนดมุมเป้าหมายจากมุมปัจจุบัน
+  float currentYaw = getContinuousYaw();  
+  float targetYaw = currentYaw + turnAngle;
 
-  targetYaw = fmod(targetYaw, 360); // ให้อยู่ในช่วง 0-359°
+  targetYaw = fmod(targetYaw, 360);
 
-  // เรียกฟังก์ชั่น PID เพื่อทำการหมุนตามมุมที่กำหนด
   turnPID(targetYaw, speedMin_turnDirection, speedMax_turnDirection, turnDirection_PID_KP, turnDirection_PID_KD);
 
-  resetContinuousYaw(); // หรือจะไม่ reset ก็ได้ ขึ้นกับลักษณะการใช้งานของคุณ
+  resetContinuousYaw();
 }
+
+
+// void turnByAngle(int turnAngle) {
+  
+//   updateContinuousYaw();
+//   float currentYaw = getContinuousYaw();  // จดจำตำแหน่งปัจจุบันก่อนหมุน
+//   float targetYaw = currentYaw + turnAngle;  // กำหนดมุมเป้าหมายจากมุมปัจจุบัน
+
+//   targetYaw = fmod(targetYaw, 360); // ให้อยู่ในช่วง 0-359°
+
+//   // เรียกฟังก์ชั่น PID เพื่อทำการหมุนตามมุมที่กำหนด
+//   turnPID(targetYaw, speedMin_turnDirection, speedMax_turnDirection, turnDirection_PID_KP, turnDirection_PID_KD);
+
+//   resetContinuousYaw(); // หรือจะไม่ reset ก็ได้ ขึ้นกับลักษณะการใช้งานของคุณ
+// }
 
 
 float normalizeAngle(float angle) {
