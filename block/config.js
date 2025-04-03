@@ -211,13 +211,11 @@ module.exports = {
                 },
                 'NKP_beep_on',
                 'NKP_beep_off',
+                
                 {
                     xml: `<sep gap="25"></sep><label text="ใช้งาน IMU รุ่นใหม่ " web-class="main-content"></label>`
                 },
                 'IMU_begin',
-                'IMU_getData',
-                'IMU_getData_Yaw',
-                'IMU_TurnByAngle',
                 {xml:
                       `<block type="IMU_set_dataFor_turnDirection">
                             <value name="S0">
@@ -232,16 +230,25 @@ module.exports = {
                             </value>
                             <value name="S2">
                                 <shadow type="math_number">
-                                    <field name="NUM">4</field>
+                                    <field name="NUM">2</field>
                                 </shadow>
                             </value>
                             <value name="S3">
                                 <shadow type="math_number">
-                                    <field name="NUM">5</field>
+                                    <field name="NUM">0.1</field>
+                                </shadow>
+                            </value>
+                            <value name="S4">
+                                <shadow type="math_number">
+                                    <field name="NUM">1</field>
                                 </shadow>
                             </value>
                         </block>`
               },
+                'IMU_getData',
+                'IMU_getData_Yaw',
+                'IMU_TurnByAngle',
+                
                 'IMU_TurnByDirection',
                 {xml:
                       `<block type="IMU_TurnPID">
@@ -262,12 +269,12 @@ module.exports = {
                             </value>
                             <value name="S3">
                                 <shadow type="math_number">
-                                    <field name="NUM">5</field>
+                                    <field name="NUM">2</field>
                                 </shadow>
                             </value>
                             <value name="S4">
                                 <shadow type="math_number">
-                                    <field name="NUM">5</field>
+                                    <field name="NUM">0.1</field>
                                 </shadow>
                             </value>
                         </block>`

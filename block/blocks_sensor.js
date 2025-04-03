@@ -401,7 +401,7 @@ Blockly.Blocks['IMU_getData'] = {
 Blockly.Blocks['IMU_TurnPID'] = {
   init: function() {
     this.appendDummyInput()
-        .appendField("TurnPID angle=");
+        .appendField("TurnPID to angle=");
     this.appendValueInput("S0")
       .setCheck("Number")
       .appendField("");
@@ -428,7 +428,8 @@ Blockly.Blocks['IMU_TurnByDirection'] = {
   init: function() {
     this.appendDummyInput()
           .appendField("Turn to Direction=")
-          .appendField(new Blockly.FieldDropdown([["⬆ turnNorth","0"],["➡ turnEast","1"], ["⬇ turnSouth","2"], ["⬅ turnWest","3"]]), "direction");
+          .appendField(new Blockly.FieldDropdown([["⬆ turn_180","0"],["➡ turn_270","1"], ["⬇ turn_390","2"], ["⬅ turn_90","3"],
+                                                  ["⬋ turn_45","4"],["⬉ turn_135","5"], ["⬈ turn_225","6"], ["⬊ turn_315","7"]]), "direction");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
@@ -439,8 +440,8 @@ Blockly.Blocks['IMU_TurnByDirection'] = {
 Blockly.Blocks['IMU_TurnByAngle'] = {
   init: function() {
     this.appendDummyInput()
-          .appendField("Turn to angle =")
-          .appendField(new Blockly.FieldDropdown([["90","0"],["-90","1"], ["180","2"], ["-180","3"]]), "angle");
+          .appendField("Turn By angle =")
+          .appendField(new Blockly.FieldDropdown([["90","0"],["-90","1"], ["180","2"], ["-180","3"], ["45","4"], ["-45","5"]]), "angle");
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(65);
@@ -473,6 +474,9 @@ Blockly.Blocks['IMU_moveStraightPID'] = {
     this.appendValueInput("S5")
       .setCheck("Number")
       .appendField("KD=");
+    this.appendDummyInput()
+        .appendField("Slow before Stop")
+        .appendField(new Blockly.FieldCheckbox("TRUE"), "Slow");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
@@ -484,6 +488,9 @@ Blockly.Blocks['IMU_set_dataFor_turnDirection'] = {
   init: function() {
     this.appendDummyInput()
         .appendField("Set Data for TurnDirection=");
+    this.appendValueInput("S4")
+      .setCheck("Number")
+      .appendField("Angle Error = ");
     this.appendValueInput("S0")
       .setCheck("Number")
       .appendField("speed Min=");
@@ -512,7 +519,8 @@ Blockly.Blocks['IMU_moveStraightDirection'] = {
           .appendField(new Blockly.FieldDropdown([["⬆ Forward","0"],["⬇ Backward","1"]]), "dir");
     this.appendDummyInput()
           .appendField("At ")
-          .appendField(new Blockly.FieldDropdown([["⬆ North","0"],["➡ East","1"], ["⬇ South","2"], ["⬅ West","3"]]), "angle");
+          .appendField(new Blockly.FieldDropdown([["⬆ North","0"],["➡ East","1"], ["⬇ South","2"], ["⬅ West","3"],
+                                                   ["⬋ SW","4"],["⬉ NW","5"], ["⬈ NE","6"], ["⬊ SE","7"]]), "angle");
     this.appendValueInput("S1")
       .setCheck("Number")
       .appendField("speed=");
@@ -528,6 +536,9 @@ Blockly.Blocks['IMU_moveStraightDirection'] = {
     this.appendValueInput("S5")
       .setCheck("Number")
       .appendField("KD=");
+    this.appendDummyInput()
+        .appendField("Slow before Stop")
+        .appendField(new Blockly.FieldCheckbox("TRUE"), "Slow");
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
